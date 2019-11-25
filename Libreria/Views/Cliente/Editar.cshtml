@@ -1,0 +1,48 @@
+﻿@model Libreria.Models.data.Cliente
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Editar Cliente</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" action="/Libreria/Cliente/Editar/@Model.IdCliente" method="post">
+                <!--Producto-->
+                <div class="form-group">
+                    <label for="txtNombre" class="col-sm-3 control-label">Nombre:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="@Model.Nombre" />
+                    </div>
+                </div>
+                <!--Procentaje-->
+                <div class="form-group" lang="en-us">
+                    <label for="txtNit" class="col-sm-3 control-label">NIT:</label>
+                    <div class="col-sm-9">
+                        <input type="number" id="txtNit" name="txtNit" step="any" class="form-control" value="@Model.NIT" />
+                    </div>
+                </div>
+                <!--Telefonos-->
+                <div class="form-group" lang="en-us">
+                    <label for="txtTelefonos" class="col-sm-3 control-label">Telefono:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="txtTelefonos" name="txtTelefonos" step="any" class="form-control" value="@Model.Telefonos" />
+                    </div>
+                </div>
+                <!--txtEmail-->
+                <div class="form-group" lang="en-us">
+                    <label for="txtEmail" class="col-sm-3 control-label">E-mail:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="txtEmail" name="txtEmail" class="form-control" value="@Model.Email" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

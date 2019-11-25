@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8f60e84cf41148088a8904295c66c8d6" Name="Diagram1">
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Carrito" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Categoria" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Clasificacion" Width="1.5" PointX="1.5" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Cliente" Width="1.5" PointX="3.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Descuento" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Detalle" Width="1.5" PointX="8.25" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.DetReserva" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Empresa" Width="1.5" PointX="1.5" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Factura" Width="1.5" PointX="6" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Nivel" Width="1.5" PointX="13" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Pedido" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Producto" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Proveedor" Width="1.5" PointX="6" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Reserva" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Rol" Width="1.5" PointX="10.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.RolUsuario" Width="1.5" PointX="13" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Stock" Width="1.5" PointX="8.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Sucursal" Width="1.5" PointX="3.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Sujeto" Width="1.5" PointX="1.5" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Usuario" Width="1.5" PointX="3.75" PointY="19.5" IsExpanded="true" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Carrito_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Producto_Categoria" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Usuario_Clasificacion" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Reserva_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Descuento_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Detalle_Factura" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Detalle_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_DetReserva_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_DetReserva_Reserva" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Sucursal_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Factura_Sucursal" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Factura_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Nivel_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Stock_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Stock_Proveedor" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_RolUsuario_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_RolUsuario_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Stock_Sucursal" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Stock_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Usuario_Sujeto" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

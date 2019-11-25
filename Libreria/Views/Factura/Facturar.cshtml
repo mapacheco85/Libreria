@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Facturar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Libreria.Models.data.Carrito>
+
+<h2>Ventas</h2>
+
+<form class="form-inline" action="@Url.Action("Imprimir","Factura")" method="post" target="_blank">
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="txtNombre">Nombre:</label>
+            <input name="txtNombre" id="txtNombre" type="text" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="txtNIT">NIT/CI:</label>
+            <input name="txtNIT" id="txtNIT" type="number" class="form-control" required />
+        </div>
+        </br></br>
+    </div>
+
+    <div class="alert alert-info">
+        <p>Listado de productos seleccionados</p>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Costo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.IdCarrito</th>
+                    <th>@item.Producto.Nombre</th>
+                    <th>@item.Producto.Descripcion</th>
+                    <th>@item.Cantidad</th>
+                    <th>@item.CostoTotal.ToString("#,#0.00")</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="alert alert-info">
+        <p class="text-right"><strong>Total: @ViewData["Totales"]</strong></p>
+    </div>
+    <div class="pull-right">
+
+        <button class="btn btn-default" type="submit">Imprimir</button>
+        <button class="btn btn-default finalizar" type="button">Finalizar</button>
+    </div>
+    <p></p>
+    </br> </br>
+
+    @section Scripts{
+        <script type="text/javascript">
+        $('.finalizar').click(function () {
+            if (confirm("Desea finalizar la venta?"))
+                document.location.href = "@Url.Content("/Libreria/factura/")";
+        });
+        </script>
+
+    }
+</form>
+

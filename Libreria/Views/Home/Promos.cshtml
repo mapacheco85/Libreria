@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Promos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Libreria.Models.data.PROListarPromociones_Result>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="header-area">
+            <h1 class="title">Promociones</h1>
+        </div>
+    </div>
+</div>
+
+<!--Productos o Marcas-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="title-medium">
+            <h2>Nuestras Ofertas</h2>
+            <p>Aqui usted podrá encontrar nuestros productos en oferta.</p>
+        </div>
+    </div>
+</div>
+<!--Oferta de Productos-->
+<div class="row">
+    @foreach (var Item in Model)
+    {
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                @if (@Item.Foto != null)
+                {
+                    <img style="height:350px;" alt="" src="@Url.Content(@Item.Foto)" />
+                }
+                else
+                {
+                    <img style="height:350px;" alt="" src="~/Content/img/sin-imagen.jpg" />
+                }
+                    <div class="caption">
+                        <h3>@Item.Nombre</h3>
+                        <p>Antes: @String.Format("{0:f}", Item.CostoVenta)<br>Ahora: @String.Format("{0:f}", Item.CostoPromo)</p>
+                        <!--<p><a class="btn btn-primary" role="button">Comprar</a></p>-->
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+

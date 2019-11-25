@@ -1,0 +1,72 @@
+﻿@{
+  ViewBag.Title = "Contact";
+}
+@model Libreria.Models.CorreoModel
+<div class="row">
+    <div class="col-md-12">
+        <div class="header-area">
+            <h1 class="title">Contáctanos</h1>
+        </div>
+    </div>
+</div>
+
+<!--Contactanos-->
+@*<div class="row">
+    <div class="col-md-12">
+        <div class="title-medium">
+            <h2>Rellene sus datos y redacte su mensaje</h2>
+            <p>Nos contactaremos a la brevedad posible.</p>
+        </div>
+    </div>
+</div>*@
+<br />
+<br />
+<div class="row">
+    <div class="container">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Nombre)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Telefono, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Telefono)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Asunto, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Asunto, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Asunto)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Mensaje, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Mensaje, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Mensaje)
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Enviar Correo">
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>

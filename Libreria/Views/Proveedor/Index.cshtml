@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Libreria.Models.data.Proveedor>
+
+<h2>Proveedores</h2>
+
+<button type="button" id="btnNuevo" name="btnNuevo" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Nuevo</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">NIT</th>
+            <th scope="col">Telefonos</th>
+            <th scope="col">Contacto</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.IdProveedor</th>
+                <th>@item.Nombre</th>
+                <th>@item.NIT</th>
+                <th>@item.Telefonos</th>
+                <th>@item.Contacto</th>
+
+                <th>
+                    <button class="btn btn-info editar" data-id="@item.IdProveedor">
+                        <!--href="@Url.Action("Editar","Sujeto", new { id=item.IdProveedor})"-->
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </button>
+                    <!--<button class="btn btn-danger eliminar" data-id="@item.IdProveedor">-->
+                        <!--href="@Url.Action("Eliminar","Sujeto", new { id=item.IdProveedor})"-->
+                        <!--<span class="glyphicon glyphicon-trash"></span>-->
+                    <!--</button>-->
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!--Modal Nuevo-->
+<div id="NeoModal" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+
+</div>
+
+<!--Modal Editar-->
+<div id="EdiModal" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        //JS cargado Ajax de la vista parcial Agregar
+        $('#btnNuevo').click(function () {
+            $('#NeoModal').load('/Libreria/proveedor/agregar');
+            $('#NeoModal').modal();
+        });
+        //JS cargado Ajax de la vista parcial Editar
+        $('.editar').click(function () {
+            var idEditar = $(this).attr("data-id");
+            $('#EdiModal').load('/Libreria/Proveedor/editar/' + idEditar);
+
+            $('#EdiModal').modal();
+        });
+        //JS cargado Ajax de la vista parcial Eliminar
+        @*$('.eliminar').click(function () {
+            if (confirm("Desea eliminar este registro?")) {
+                var id = $(this).attr("data-id");
+                var url = "@Url.Content("/Libreria/proveedor/eliminar")" + "/" + id;
+                $.post(url, function (data) {
+                    document.location.href = "@Url.Content("/Libreria/proveedor/")"
+                    console.log("Éxito");
+                })
+            }
+        });*@
+    </script>
+}

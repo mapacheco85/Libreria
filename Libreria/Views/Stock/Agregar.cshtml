@@ -1,0 +1,61 @@
+﻿
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title">Agregar Stock</h4>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal" action="/Libreria/Stock/Agregar" method="post">
+        <!--Proveedor-->
+        <div class="form-group">
+          <label for="IdProveedor" class="col-sm-3 control-label">Proveedor:</label>
+          <div class="col-sm-9">
+            @Html.DropDownList("IdProveedor", ViewData["Proveedores"] as List<SelectListItem>, new { @class = "form-control" })
+          </div>
+        </div>
+        <!--Producto-->
+        <div class="form-group">
+          <label for="IdProducto" class="col-sm-3 control-label">Producto:</label>
+          <div class="col-sm-9">
+            @Html.DropDownList("IdProducto", ViewData["Productos"] as List<SelectListItem>, new { @class = "form-control" })
+          </div>
+        </div>
+        <!--Cantidad-->
+        <div class="form-group">
+          <label for="txtCantidad" class="col-sm-3 control-label">Cantidad:</label>
+          <div class="col-sm-9">
+            <input type="number" id="txtCantidad" min="1" name="txtCantidad" class="form-control" placeholder="0" />
+          </div>
+        </div>
+        <!--PrecioUnitario-->
+        <div class="form-group" lang="es-us">
+          <label for="txtPrecio" class="col-sm-3 control-label">Precio Unitario:</label>
+          <div class="col-sm-9">
+            <input type="number" id="txtPrecio" name="txtPrecio" min="1" step="any" class="form-control" placeholder="0,00" />
+          </div>
+        </div>
+        <!--CostoVenta-->
+        <div class="form-group" lang="es-us">
+          <label for="txtCosto" class="col-sm-3 control-label">Costo Venta:</label>
+          <div class="col-sm-9">
+            <input type="number" id="txtCosto" name="txtCosto" min="1" step="any" class="form-control" placeholder="0,00" />
+          </div>
+        </div>
+        <!--FechaVencimiento-->
+        <div class="form-group">
+          <label for="txtVencimiento" class="col-sm-3 control-label">Fecha Vencimiento:</label>
+          <div class="col-sm-9">
+            <input type="date" id="txtVencimiento" name="txtVencimiento" class="form-control" placeholder="00/00/0000" value="31/12/2030" />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

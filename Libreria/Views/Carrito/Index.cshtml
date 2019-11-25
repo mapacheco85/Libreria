@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Libreria.Models.data.Carrito>
+
+<h2>Lista de Pedidos</h2>
+<a class="btn btn-default" href="/Libreria/Carrito/Catalogo" role="button">
+    Catálogo de Productos
+</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Producto</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Costo</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.IdCarrito</th>
+                <th>@item.Producto.Nombre</th>
+                <th>@item.Producto.Descripcion</th>
+                <th>
+                    <div class="col-sm-3">
+                        <input name="txtCantidad@(item.IdCarrito)" id="txtCantidad@(item.IdCarrito)" class="form-control" min="1" type="number" value="@item.Cantidad" />
+                    </div>
+                    <button type="button" class="btn btn-warning" onclick="jsEditar(@item.IdCarrito)">Actualizar</button>
+                </th>
+                <th>
+                    @item.CostoTotal.ToString("#,#0.00")
+                </th>
+                <th>
+                    <button type="button" class="btn btn-danger" onclick="jsEliminar(@item.IdCarrito)">Eliminar</button>
+                </th>
+            </tr>
+
+        }
+    </tbody>
+</table>
+@*<button class="btn btn-default cancelar" type="button" onclick="Cancelar2();">Cancelar</button>*@
+
+@Html.ActionLink("Realizar Pedido", "Pedido", "Carrito", new { @class = "btn btn-default pull-right" })
+
+
+<script>
+  function jsEliminar(id) {
+    if (confirm("Quieres eliminar el registro?")) {
+      url = "@Url.Content("~/carrito/eliminar")" + "/" + id;
+
+      $.post(url, function (data) {
+        if (data == "OK") {
+          document.location.href = "@Url.Content("~/carrito")";
+        }
+        else {
+          alert("Ocurrio un error");
+        }
+
+      });
+    }
+  }
+
+  function jsEditar(id) {
+    name = '#txtCantidad' + id;
+    Valor = $(name).val();
+    url = "@Url.Action("Editar","Carrito", new {id="III",Cantidad="CCC" })";
+    url = url.replace("III", id);
+    url = url.replace("CCC", Valor);
+
+    $.post(url, function (data) {
+      if (data == "OK") {
+        document.location.href = "@Url.Content("~/carrito")";
+      }
+      else {
+        alert("Ocurrio un error");
+      }
+    });
+    }
+
+    function Cancelar2() {
+        if (confirm("Desea cancelar?")) {
+      url = "@Url.Content("~/carrito/cancelarpedido")";
+            $.post(url, function (data) {
+          if (data == "OK") {
+              //alert(url);
+          document.location.href = "@Url.Content("~/carrito")";
+        }
+          else {
+          alert("Ocurrio un error");
+        }
+
+            });
+        }
+    }
+</script>

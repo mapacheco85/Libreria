@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Libreria.Models.data.Carrito>
+
+<h2>Ventas</h2>
+
+<form class="form-inline" action="/Libreria/Factura/Agregar" method="post">
+    <!--Productos-->
+    <div class="form-group">
+        <input class="form-control" id="Codigo" placeholder="Escriba un codigo" name="Codigo" required />
+    </div>
+    <!--Productos-->
+    @*<div class="form-group">
+        <input class="form-control" id="IdProducto" placeholder="Elija un producto" name="IdProducto" required />
+    </div>*@
+    <!--Cantidad-->
+    <div class="form-group">
+        <label for="txtCantidad">Cantidad:</label>
+        <input type="number" id="txtCantidad" name="txtCantidad" class="form-control" min="1" placeholder="Cantidad" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Agregar</button>
+</form>
+
+<p></p>
+<!--Listado de productos a facturar-->
+<div class="alert alert-info">
+    <p>Listado de productos seleccionados</p>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Producto</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col" style="text-align:center;">Cantidad</th>
+            <th scope="col" style="text-align:right;">Precio Unitario</th>
+            <th scope="col" style="text-align:right;">Costo</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @try
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.IdCarrito</th>
+                    <th>@item.Producto.Nombre</th>
+                    <th>@item.Producto.Descripcion</th>
+                    <th style="text-align:center;">@item.Cantidad</th>
+                    <th style="text-align:right;">@String.Format("{0:f}", item.CostoUnidad)</th>
+                    <th style="text-align:right;">@String.Format("{0:f}", item.CostoTotal)</th>
+                    <th>
+                        <button type="button" class="btn btn-danger" onclick="jsEliminar(@item.IdCarrito)">Eliminar</button>
+                    </th>
+                </tr>
+
+            }
+        }
+        catch
+        {
+            <script type="text/javascript"> alert('No tiene el stock suficiente para este producto!!');</script>
+        }
+    </tbody>
+</table>
+<div class="alert alert-info">
+    <p class="text-right"><strong>Total: @ViewData["Totales"]</strong></p>
+</div>
+<div class="pull-right">
+    <button class="btn btn-default cancelar" type="button" onclick="javascript: Cancelar1();">Cancelar</button>
+    @Html.ActionLink("Vender", "Facturar", "Factura", new { @class = "btn btn-default" })
+    <br />
+    <br />
+</div>
+<p></p>
+
+@section Scripts{
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript">
+        function Cancelar1() {
+            if (confirm("Desea cancelar?")) {
+                url = "@Url.Content("~/factura/cancelar")";
+
+                $.post(url, function (data) {
+                    if (data == "OK") {
+                        //alert(url);
+                        document.location.href = "@Url.Content("~/factura")";
+                    }
+                    else {
+                        alert("Ocurrio un error");
+                    }
+                });
+            }
+        }
+
+        function jsEliminar(id) {
+            if (confirm("Quieres eliminar el registro?")) {
+                url = "@Url.Content("~/factura/eliminar")" + "/" + id;
+                $.post(url, function (data) {
+                    if (data == "OK") {
+                        document.location.href = "@Url.Content("~/factura")";
+                    }
+                    else {
+                        alert("Ocurrio un error");
+                    }
+                });
+            }
+        }
+
+        $("#IdProducto").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetSearchValue","Factura")',
+                    dataType: "json",
+                    data: { search: $("#IdProducto").val() },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Nombre, value: item.Nombre };
+                        }));
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            }
+        });
+
+        $("#Codigo").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetSearchValueCode","Factura")',
+                    dataType: "json",
+                    data: { search: $("#Codigo").val() },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Codigo, value: item.Codigo };
+                        }));
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            }
+        });
+
+        @*$("#Codigo").change({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetProductCode", "Factura")',
+                    dataType: "json",
+                    data: { search: $("#IdProducto").val() },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Codigo, value: item.Codigo };
+                        }));
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            }
+        });*@
+    </script>
+}

@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Libreria.Models.CReports>
+
+<h2>Reportes</h2>
+<form class="form-horizontal" action="http://desktop-aimsqo8/reports/report/ElfReports/ReporteGeneral" method="get" target="_blank">
+
+    <div class="form-group">
+        <label for="txtFecha1" class="col-sm-3 control-label">Fecha Inicio:</label>
+        <div class="col-sm-9">
+            <input type="date" id="Fecha1" name="Fecha1" class="form-control" placeholder="00/00/0000" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="txtFecha2" class="col-sm-3 control-label">Fecha Fin:</label>
+        <div class="col-sm-9">
+            <input type="date" id="Fecha2" name="Fecha2" class="form-control" placeholder="00/00/0000" />
+        </div>
+    </div>
+    <div class="form-group">
+
+        <label for="Listas" class="col-sm-3 control-label">Tipo de Reporte:</label>
+        <div class="col-sm-9">
+            @Html.DropDownList("TipoReportes")
+        </div>
+    </div>
+    <div class="mi-footer">
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-primary cargar">Ejecutar</button>
+        <br />
+        <br />
+    </div>
+</form>*@**@
+
+
+@*@section Scripts{
+        <script type="text/javascript">
+
+        $('.cargar').click(function () {
+
+          var url = "@Url.Content("/Libreria/reporte/reportgeneral")";
+          //alert(url);
+              $.post(url, function (data) {
+                      document.location.href = "@Url.Content("/Libreria/reporte/reportgeneral")"
+                      console.log("Éxito");
+              })
+      });
+        </script>
+    }*@

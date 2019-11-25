@@ -1,0 +1,181 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.title-medium{
+  display:inline;
+  float:left;
+  text-align:center;
+  width:100%;
+  margin-bottom:45px;
+  margin-top:45px;
+  padding:0 25%;
+}
+
+  .title-medium h3 {
+    color: #323232;
+    font-size:30px;
+    text-transform:uppercase;
+    margin-bottom:15px;
+  }
+
+.about-left{
+  display:inline;
+  float:left;
+  padding-right:15px;
+  width:100%;
+}
+
+.about-right{
+  display:inline;
+  float:left;
+  padding-left:15px;
+  width:100%;
+}
+  .about-right ul li{
+    list-style:none;
+    float:left;
+    margin-bottom:25px;
+  }
+    .about-right ul li h3 {
+      border-bottom: 3px solid #e5e5e5;
+      color: #323232;
+      font-size:20px;
+      display:inline-block;
+      padding-bottom:5px;
+      margin-bottom:15px;
+    }
+.about-right p{
+  font-size:14px;
+}
+
+
+.mi-footer {
+  background-color: #fff;
+  display:inline;
+  float:left;
+  width:100%;
+}
+.mi-footer-top {
+  background-color: #0277bd;
+  display:inline;
+  float:left;
+  padding:55px 0;
+  width:100%;
+}
+.mi-footer-single{
+  display:inline;
+  float:left;
+  color:#fff;
+  font-size:14px;
+  width:100%;
+}
+.mi-footer-single h3 {
+  color: #fff;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin-bottom: 35px;
+}
+
+  .mi-footer-single ul li {
+    border-bottom: 1px solid #1c85c4;
+    list-style: none;
+    margin-bottom: 10px;
+    padding-bottom: 12px;
+    font-size: 14px;
+  }
+
+    .mi-footer-single ul li a {
+      color: #fff;
+    }
+
+    .mi-footer-single ul li:last-child {
+      border-bottom: none;
+    }
+
+  .mi-footer-single .mi-useful-links li {
+    line-height: 1;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+
+.social-media {
+  display: inline;
+  float: left;
+  width: 100%;
+  border-top: 1px solid #1c85c4;
+  padding-top: 12px;
+}
+  .social-media a {
+    background-color: #3b5998;
+    border: 1px solid #babcbe;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    margin-right: 6px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out 0s;
+    width:40px;
+    height:40Px;
+    line-height:40px;
+    font-size:16px;
+  }
+
+
+  .mi-footer-bottom {
+    background-color: #004f7f;
+    display: inline;
+    padding: 20px 0;
+    float: left;
+    width: 100%;
+  }
+.mi-footer-bottom-area{
+  display:inline;
+  float:left;
+  text-align:center;
+  width:100%;
+}
+.mi-copyright {
+  color: #fff;
+  margin-bottom:0px;
+  font-size:14px;
+}
+
+.media{
+  display:-ms-flexbox;
+  display:flex;
+  -ms-flex-align:start;
+  align-items:flex-start;
+}
+.media-body{
+  -ms-flex:1;
+  flex:1;
+}
+
+
+ul {
+  padding: 0;
+  margin: 0;
+}

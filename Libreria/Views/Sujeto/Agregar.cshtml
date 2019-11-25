@@ -1,0 +1,90 @@
+﻿
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title">Nuevo Usuario</h4>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal" action="/Libreria/Sujeto/Agregar" method="post">
+        <!--Nombres-->
+        <div class="form-group">
+          <label for="txtNombres" class="col-sm-3 control-label">Nombres:</label>
+          <div class="col-sm-9">
+            <input type="text" id="txtNombres" name="txtNombres" class="form-control" placeholder="Nombres" required/>
+          </div>
+        </div>
+        <!--Apellidos-->
+        <div class="form-group">
+          <label for="txtApellidos" class="col-sm-3 control-label">Apellidos:</label>
+          <div class="col-sm-9">
+            <input type="text" id="txtApellidos" name="txtApellidos" class="form-control" placeholder="Apellidos" required />
+          </div>
+        </div>
+        <!--CI/NIT-->
+        <div class="form-group">
+          <label for="txtCiNit" class="col-sm-3 control-label">CI/NIT:</label>
+          <div class="col-sm-9">
+            <input type="number" id="txtCiNit" name="txtCiNit" class="form-control" placeholder="CI/NIT" required />
+          </div>
+        </div>
+        <!--Telefonos-->
+        <div class="form-group">
+          <label for="txtTelefonos" class="col-sm-3 control-label">Telefono:</label>
+          <div class="col-sm-9">
+            <input type="text" id="txtTelefonos" name="txtTelefonos" class="form-control" placeholder="Telefonos" />
+          </div>
+        </div>
+        <!--Direccion-->
+        <div class="form-group">
+          <label for="txtDireccion" class="col-sm-3 control-label">Dirección:</label>
+          <div class="col-sm-9">
+            <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" placeholder="Dirección" />
+          </div>
+        </div>
+        <!--Email-->
+        <div class="form-group">
+          <label for="txtEmail" class="col-sm-3 control-label">Email:</label>
+          <div class="col-sm-9">
+            <input type="email" id="txtEmail" name="txtEmail" class="form-control" placeholder="Email" />
+          </div>
+        </div>
+        <!--Razon Social-->
+        <div class="form-group">
+          <label for="txtRazonSocial" class="col-sm-3 control-label">Razón Social:</label>
+          <div class="col-sm-9">
+            <input type="text" id="txtRazonSocial" name="txtRazonSocial" class="form-control" placeholder="Razón Social" required />
+          </div>
+        </div>
+        <!--Rol-->
+        <div class="form-group">
+          <label for="IdRol" class="col-sm-3 control-label">Rol:</label>
+          <div class="col-sm-9">
+            @Html.DropDownList("IdRol",ViewData["Roles"] as List<SelectListItem>, new { @class="form-control"})
+          </div>
+        </div>
+        <!--Login-->
+        <div class="form-group">
+          <label for="txtLogin" class="col-sm-3 control-label">Login:</label>
+          <div class="col-sm-9">
+            <input type="text" id="txtLogin" name="txtLogin" class="form-control" placeholder="Login" required />
+          </div>
+        </div>
+        <!--Password-->
+        <div class="form-group">
+          <label for="txtPwd" class="col-sm-3 control-label">Password:</label>
+          <div class="col-sm-9">
+            <input type="password" id="txtPwd" name="txtPwd" class="form-control" required />
+          </div>
+        </div>
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

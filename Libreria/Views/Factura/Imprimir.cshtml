@@ -1,0 +1,104 @@
+﻿
+@{
+    Layout = null;
+}
+@model Libreria.Models.data.Factura
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Imprimir</title>
+    <link href="~/Content/factura.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="Container">
+        <!--Cabecera de Factura-->
+        <div class="Izquierda">
+            <h3>LIBRERIA ELF</h3>
+            <h4>CASA MATRIZ</h4>
+            <p>&nbsp;Av. Gobles # 115, Barrio Irpavi, La Paz – Bolivia.</p>
+        </div>
+
+        <div class="Centro">
+            <h2>NOTA DE VENTA</h2>
+            <p>ORIGINAL</p>
+        </div>
+
+        <div class="Derecha" style="border: hidden;">
+            @*<p><strong>NIT: Nº @Model.Sucursal.NIT</strong></p>*@
+            <p><strong>VENTA: Nº @Model.Numero.ToString()</strong></p>
+            @*<p><strong>AUTORIZACION: Nº @Model.Sucursal.NroAutorizacion</strong></p>*@
+        </div>
+        <!--Datos del Cliente-->
+        <div class="Fecha">
+            <p><strong>FECHA: @Model.Fecha.ToString("dd MMMM yyyy")</strong></p>
+        </div>
+        <div class="ClienteContainer">
+            <div class="ClienteNom"><strong>SEÑORES:</strong> @Model.Nombre</div>
+            <div class="ClienteNit"><strong>NIT:</strong> @Model.NIT</div>
+        </div>
+        <!--Detalles-->
+        <table class="Tabla">
+            <caption><strong>DETALLE</strong></caption>
+            <colgroup>
+                <col style="width:70%">
+                <col style="width:15%">
+                <col style="width:15%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Descripcion</th>
+                    <th style="text-align: center;">Cantidad</th>
+                    <th style="text-align: center;">Precio Unitario</th>
+                    <th style="text-align: right;">Costo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    short Contador = 0;
+                    List<Libreria.Models.data.Detalle> Det = (List<Libreria.Models.data.Detalle>)ViewData["Detalle"];
+                    foreach (var Item in Det)
+                    {
+                        Contador += 1;
+                        <tr>
+                            <th>@Item.Producto.Nombre</th>
+                            <th class="Cantidad" style="text-align: center;">@Item.Cantidad.ToString()</th>
+                            <th class="Costo" style="text-align: center;">@(Item.Monto / Item.Cantidad)</th>
+                            <th class="Costo" style="text-align: right;">@Item.Monto</th>
+                        </tr>
+                    }
+                    for (var i = Contador; i < 10; i++)
+                    {
+                        <tr>
+                            <th></th>
+                            <th class="Cantidad" style="text-align: center;"></th>
+                            <th class="Costo" style="text-align: right;"></th>
+                            <th class="Costo" style="text-align: right;"></th>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+        <!--Pie Factura-->
+        <div class="PieContainer">
+            <div class="Literal">
+                <strong>SON:</strong> @ViewData["Literal"]
+            </div>
+            <div class="Total">
+                <strong>TOTAL BS.</strong> @ViewData["Total"]
+            </div>
+        </div>
+        <!--Codigo Control y Fecha Limite-->
+        <div class="Pie">
+            @*<strong>CODIGO DE CONTROL:</strong> @Model.CodigoControl*@
+        </div>
+        <div class="Pie">
+            @*<strong>FECHA LIMITE DE EMISIÓN:</strong> @ViewData["FecLimite"]*@
+        </div>
+    </div>
+
+</body>
+</html>

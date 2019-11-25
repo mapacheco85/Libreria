@@ -1,0 +1,90 @@
+﻿*{
+  margin:0;
+  padding:0;
+}
+.Container{
+  text-align:center;
+  width:800px;
+}
+.Izquierda{
+  height:80px;
+  float:left;
+  width:200px;
+  padding:10px 0;
+}
+.Centro {
+  display: inline-block;
+  height: 80px;
+  width: 200px;
+  padding:10px 0;
+}
+.Derecha {
+  border:1px solid black;
+  height: 80px;
+  float: right;
+  width: 300px;
+  padding:10px 0;
+}
+.Fecha{
+  padding:20px 0;
+  text-align:right;
+}
+.ClienteContainer{
+  padding:10px;
+}
+.ClienteNom{
+  float:left;
+  width:50%;
+  text-align:left;
+}
+.ClienteNit {
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+.Tabla{
+  border-collapse:collapse;
+  margin:50px 0 0 0;
+  width:100%;
+  height:230px;
+  border-top:1px solid black;
+  border-bottom: 1px solid black;
+}
+.Tabla thead{
+  border-bottom:1px solid black;
+}
+.Tabla thead tr th{
+  padding:7px 0;
+}
+.Tabla tbody tr{
+  text-align:left;
+}
+.Cantidad{
+  text-align:center;
+}
+.Costo{
+  text-align:right;
+}
+
+.PieContainer {
+  padding: 10px;
+}
+.Literal {
+  float: left;
+  width: 70%;
+  text-align: left;
+  border-bottom: 1px solid black;
+  margin-bottom:5px;
+}
+.Total {
+  float: right;
+  width: 30%;
+  text-align: right;
+}
+.Pie{
+  border-bottom: 1px solid black;
+  margin:5px;
+  text-align:left;
+  font-size:15px;
+  clear:both;
+}

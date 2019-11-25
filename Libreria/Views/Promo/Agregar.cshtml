@@ -1,0 +1,47 @@
+﻿
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title">Agregar Promoción</h4>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal" action="/Libreria/Promo/Agregar" method="post">
+        <!--Producto-->
+        <div class="form-group">
+          <label for="IdProducto" class="col-sm-3 control-label">Producto:</label>
+          <div class="col-sm-9">
+            @Html.DropDownList("IdProducto", ViewData["Productos"] as List<SelectListItem>, new { @class = "form-control" })
+          </div>
+        </div>
+        <!--Procentaje-->
+        <div class="form-group" lang="en-us">
+          <label for="txtPorcentaje" class="col-sm-3 control-label">Porcentaje:</label>
+          <div class="col-sm-9">
+            <input type="number" id="txtPorcentaje" min="1" name="txtPorcentaje" step="any" class="form-control" placeholder="0" />
+          </div>
+        </div>
+        <!--Fecha Inicio-->
+        <div class="form-group" lang="es-us">
+          <label for="txtIni" class="col-sm-3 control-label">Fecha Inicio:</label>
+          <div class="col-sm-9">
+            <input type="date" id="txtIni" name="txtIni" step="any" class="form-control" placeholder="@DateTime.Now" />
+          </div>
+        </div>
+        <!--Fecha Fin-->
+        <div class="form-group" lang="es-us">
+          <label for="txtFin" class="col-sm-3 control-label">Fecha Fin:</label>
+          <div class="col-sm-9">
+            <input type="date" id="txtFin" name="txtFin" step="any" class="form-control" placeholder="@DateTime.Now" />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

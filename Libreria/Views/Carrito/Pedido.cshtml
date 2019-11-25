@@ -1,0 +1,95 @@
+﻿
+@{
+  ViewBag.Title = "Pedido";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Libreria.Models.data.Carrito>
+<h2>Pedido</h2>
+
+<h2>Lista de Pedidos</h2>
+<a class="btn btn-default" href="/Libreria/Carrito/Catalogo" role="button">
+  Catalogo de Productos
+</a>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Producto</th>
+      <th scope="col">Descripcion</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Costo</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model)
+    {
+      <tr>
+        <th scope="row">@item.IdCarrito</th>
+        <th>@item.Producto.Nombre</th>
+        <th>@item.Producto.Descripcion</th>
+        <th>@item.Cantidad</th>
+        <th>@String.Format("{0:f}", item.CostoTotal)</th>
+      </tr>
+
+    }
+  </tbody>
+</table>
+
+<div class="alert alert-info" role="alert">
+  <p class="text-right">
+    <strong>Total a Pagar: @ViewData["Totales"] Bs.</strong>
+  </p>
+</div>
+
+<!--Formulario de Datos del pedido-->
+<form class="form-horizontal" action="/Libreria/Carrito/Pedido" method="post">
+    <!--Nombres y Apellidos-->
+    <div class="form-group">
+        <label for="txtNombres" class="col-sm-3 control-label">Nombres:</label>
+        <div class="col-sm-9">
+            <input type="text" id="txtNombres" name="txtNombres" class="form-control" placeholder="Nombres y Apellidos" required />
+        </div>
+    </div>
+    <!--Direccion-->
+    <div class="form-group">
+        <label for="txtDireccion" class="col-sm-3 control-label">Direccion:</label>
+        <div class="col-sm-9">
+            <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" placeholder="Dirección" required />
+        </div>
+    </div>
+    <!--Ciudad-->
+    <div class="form-group">
+        <label for="txtCiudad" class="col-sm-3 control-label">Ciudad:</label>
+        <div class="col-sm-9">
+            <input type="text" id="txtCiudad" name="txtCiudad" class="form-control" placeholder="Ciudad" required />
+        </div>
+    </div>
+    <!--Email-->
+    <div class="form-group">
+        <label for="txtEmail" class="col-sm-3 control-label">Email:</label>
+        <div class="col-sm-9">
+            <input type="email" id="txtEmail" name="txtEmail" class="form-control" placeholder="Email" required />
+        </div>
+    </div>
+    <!--Telefonos-->
+    <div class="form-group">
+        <label for="txtTelefonos" class="col-sm-3 control-label">Telefonos:</label>
+        <div class="col-sm-9">
+            <input type="text" id="txtTelefonos" name="txtTelefonos" class="form-control" placeholder="Telefonos" required />
+        </div>
+    </div>
+
+    <div class="alert alert-warning" role="alert">
+        <p>
+            Todos los datos deben ser llenados de forma obligatoria.
+        </p>
+    </div>
+
+
+    <div class="modal-footer">
+        @*<button type="submit" class="btn btn-primary">Cancelar Pedido</button>*@
+        <button type="submit" class="btn btn-primary">Registrar Pedido</button>
+
+    </div>
+
+</form>

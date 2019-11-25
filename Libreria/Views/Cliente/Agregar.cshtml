@@ -1,0 +1,45 @@
+﻿
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Agregar Cliente</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" action="/Libreria/Cliente/Agregar" method="post">
+                <!--Producto-->
+                <div class="form-group">
+                    <label for="txtNombre" class="col-sm-3 control-label">Nombre:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="" />
+                    </div>
+                </div>
+                <!--Procentaje-->
+                <div class="form-group" lang="en-us">
+                    <label for="txtNit" class="col-sm-3 control-label">NIT:</label>
+                    <div class="col-sm-9">
+                        <input type="number" id="txtNit" name="txtNit" step="any" class="form-control" placeholder="" />
+                    </div>
+                </div>
+                <!--Telefonos-->
+                <div class="form-group" lang="en-us">
+                    <label for="txtTelefonos" class="col-sm-3 control-label">Telefono:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="txtTelefonos" name="txtTelefonos" step="any" class="form-control" placeholder="" />
+                    </div>
+                </div>
+                <!--txtEmail-->
+                <div class="form-group" lang="en-us">
+                    <label for="txtEmail" class="col-sm-3 control-label">E-mail:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="txtEmail" name="txtEmail" class="form-control" placeholder="" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

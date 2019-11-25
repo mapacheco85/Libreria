@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model List<Libreria.Models.data.PROListarPromociones_Result>
+
+<br />
+<!--Carrusel-->
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="~/Content/img/Foto1.jpg" alt="...">
+            <div class="carousel-caption">
+                <h3></h3>
+                <p></p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Content/img/Foto2.png" alt="...">
+            <div class="carousel-caption">
+                <h3></h3>
+                <p></p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Content/img/Foto3.jpg" alt="...">
+            <div class="carousel-caption">
+                <h3></h3>
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<!--Sobre Nosotros-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="title-medium">
+            <h2>Sobre Nosotros</h2>
+            <p>
+                "La Librería Elf inició sus actividades en el barrio de Irpavi de la zona sur de la ciudad de La Paz.  El nombre de la firma fue formado con las iniciales de los nombres de los socios fundadores, Elena Herrera, Lorena Herrera y Fernando Herrera.
+                La principal actividad de la Librería Elf, es la comercialización de material de oficina, escolar y de dibujo técnico. Inicialmente la empresa representaba a las firmas Nestler Graphics (Alemania), Christian Eisen (Alemania), Helix Ltd. (Inglaterra), y Tipp-Ex (Alemania) y se distribuían productos de otras empresas como ser Staedtler Mars (Alemania) y Schmidt (Alemania). Posteriormente se ampliaron las importaciones para incluir otras marcas"..
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="about-left">
+            <img src="~/Content/img/nostrosL.jpg" />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="">
+            <ul>
+                <li>
+                    <h3>Nuestra Misión</h3>
+                    <p>Comercializar material de oficina, escolar y de dibujo técnico.</p>
+                </li>
+                <li>
+                    <h3>Nuestra Visión</h3>
+                    <p>Contribuir al desarrollo del país con nuestra calidad de atención al cliente.</p>
+                </li>
+                <li>
+                    <h3>Nuestros Valores</h3>
+                    <p>Responsabilidad, honestidad y respeto.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<!--Productos o Marcas-->
+@*<div class="row">
+      <div class="col-md-12">
+        <div class="title-medium">
+          <h2>Nuestras Ofertas</h2>
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa cum sociis.</p>
+        </div>
+      </div>
+    </div>*@
+<!--Oferta de Productos-->
+@*<div class="row">
+    @foreach (var Item in Model)
+    {
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                @if (@Item.Foto != null)
+                {
+                    <img style="height:350px;" alt="" src="@Url.Content(@Item.Foto)" />
+                }
+                else
+                {
+                    <img style="height:350px;" alt="" src="~/Content/img/sin-imagen.jpg" />
+                }
+
+                <div class="caption">
+                    <h3>@Item.Nombre</h3>
+                    <p>Antes: @Item.CostoVenta<br>Ahora: @Item.CostoPromo</p>
+                    <p><a class="btn btn-primary" role="button">Comprar</a></p>
+                </div>
+            </div>
+        </div>
+    }
+</div>*@
+@*<p>@ViewData["ID"]</p>*@
+
