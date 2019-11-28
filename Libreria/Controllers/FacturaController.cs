@@ -71,7 +71,6 @@ namespace Libreria.Controllers
                 DB.Configuration.LazyLoadingEnabled = false;
                 var Car = DB.Carrito.Include("Producto").Where(P => P.SessionID == Session.SessionID & P.Transaccion == true & P.Activo == true).ToList();
                 ViewData["Totales"] = Car.Sum(P => P.CostoTotal).ToString("#,#0.00");
-
                 return View(Car);
             }
         }
@@ -91,21 +90,30 @@ namespace Libreria.Controllers
 
                     if (res == true)
                     {
+                        int cant = DB.Carrito.Where(c => c.IdProducto == Pros.IdProducto && c.Transaccion == true && c.Activo == true).Count();
+                        if (cant == 0)
+                        {
+                            Carrito Car = new Carrito();
+                            Car.SessionID = Session.SessionID;
+                            Car.IdProducto = Pros.IdProducto;
+                            Car.Cantidad = short.Parse(Col["txtCantidad"]);
+                            decimal precio = DB.Database.SqlQuery<decimal>(String.Format(@"select dbo.fnDescuento({0})", Pros.IdProducto)).FirstOrDefault<decimal>();
 
-                        Carrito Car = new Carrito();
-                        Car.SessionID = Session.SessionID;
-                        Car.IdProducto = Pros.IdProducto;
-                        Car.Cantidad = short.Parse(Col["txtCantidad"]);
-
-                        decimal precio = DB.Database.SqlQuery<decimal>(String.Format(@"select dbo.fnDescuento({0})", Pros.IdProducto)).FirstOrDefault<decimal>();
-
-                        Car.CostoUnidad = precio; //Pros.CostoVenta;
-                        Car.CostoTotal = (Car.Cantidad * Car.CostoUnidad);
-                        Car.FechaREG = DateTime.Now;
-                        Car.Transaccion = true;
-                        Car.Activo = true;
-                        DB.Carrito.Add(Car);
-                        DB.SaveChanges();
+                            Car.CostoUnidad = precio; //Pros.CostoVenta;
+                            Car.CostoTotal = (Car.Cantidad * Car.CostoUnidad);
+                            Car.FechaREG = DateTime.Now;
+                            Car.Transaccion = true;
+                            Car.Activo = true;
+                            DB.Carrito.Add(Car);
+                            DB.SaveChanges();
+                        }
+                        else
+                        {
+                            Carrito car = DB.Carrito.SingleOrDefault(P => P.IdProducto == Pros.IdProducto & P.Transaccion == true & P.Activo == true);
+                            short cantNueva = short.Parse(Col["txtCantidad"]);
+                            car.Cantidad = (short)(car.Cantidad + cantNueva);
+                            DB.SaveChanges();
+                        }
 
                         //Se Cargan los datos para la vista.
                         DB.Configuration.LazyLoadingEnabled = false;
