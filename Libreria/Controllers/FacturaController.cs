@@ -146,7 +146,6 @@ namespace Libreria.Controllers
                         ViewBag.Error = "No hay el stock requerido!!!";
                         return View("Index");
                     }
-                    
                 }
             }
             else
