@@ -99,7 +99,7 @@ namespace Libreria.Controllers
                             Car.Cantidad = short.Parse(Col["txtCantidad"]);
                             decimal precio = DB.Database.SqlQuery<decimal>(String.Format(@"select dbo.fnDescuento({0})", Pros.IdProducto)).FirstOrDefault<decimal>();
 
-                            Car.CostoUnidad = precio; //Pros.CostoVenta;
+                            Car.CostoUnidad = precio; 
                             Car.CostoTotal = (Car.Cantidad * Car.CostoUnidad);
                             Car.FechaREG = DateTime.Now;
                             Car.Transaccion = true;
@@ -112,6 +112,7 @@ namespace Libreria.Controllers
                             Carrito car = DB.Carrito.SingleOrDefault(P => P.IdProducto == Pros.IdProducto & P.Transaccion == true & P.Activo == true);
                             short cantNueva = short.Parse(Col["txtCantidad"]);
                             car.Cantidad = (short)(car.Cantidad + cantNueva);
+                            car.CostoTotal = (car.Cantidad * car.CostoUnidad);
                             DB.SaveChanges();
                         }
 
