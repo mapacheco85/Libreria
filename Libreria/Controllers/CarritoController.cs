@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Libreria.Models.data;
+using System.Net.Mail;
+using System.Net;
+using Libreria.Models;
+using System.Text;
 
 namespace Libreria.Controllers
 {
@@ -16,7 +20,6 @@ namespace Libreria.Controllers
             {
                 DB.Configuration.LazyLoadingEnabled = false;
                 var Car = DB.Carrito.Include("Producto").Where(P => P.SessionID == Session.SessionID).ToList();
-
                 return View(Car);
             }
         }
@@ -28,7 +31,6 @@ namespace Libreria.Controllers
                 using (var DB = new ModLibreriaDB())
                 {
                     var Pros = DB.PROListarProductos().ToList().FindAll(p => p.Nombre.ToLower().Contains(filtro.ToLower()));
-
                     return View(Pros);
                 }
             }
@@ -48,17 +50,13 @@ namespace Libreria.Controllers
             {
                 DB.Configuration.LazyLoadingEnabled = false;
                 var Car = DB.Carrito.Include("Producto").Where(P => P.SessionID == Session.SessionID).ToList();
-
                 var Totales = Car.Sum(P => P.CostoTotal).ToString("#,#0.00");
                 ViewData["Totales"] = Totales;
-
                 return View(Car);
             }
         }
 
-
         //POST: Carrito
-
         [HttpPost]
         public ActionResult Agregar(short id)
         {
@@ -74,16 +72,11 @@ namespace Libreria.Controllers
                 Car.FechaREG = DateTime.Now;
                 Car.Transaccion = false;
                 Car.Activo = true;
-
                 DB.Carrito.Add(Car);
-
                 DB.SaveChanges();
-
-
                 DB.Configuration.LazyLoadingEnabled = false;
 
                 var Cars = DB.Carrito.Include("Producto").Where(P => P.SessionID == Session.SessionID).ToList();
-
                 return View("Index", Cars);
             }
         }
@@ -97,9 +90,7 @@ namespace Libreria.Controllers
                 var Car = DB.Carrito.SingleOrDefault(P => P.IdCarrito == id);
                 Car.Cantidad = cantidad;
                 Car.CostoTotal = Car.Cantidad * Car.CostoUnidad;
-
                 DB.SaveChanges();
-
                 return Content("OK");
             }
         }
@@ -110,10 +101,8 @@ namespace Libreria.Controllers
             using (var DB = new ModLibreriaDB())
             {
                 var Car = DB.Carrito.SingleOrDefault(P => P.IdCarrito == id);
-
                 DB.Carrito.Remove(Car);
                 DB.SaveChanges();
-
                 return Content("OK");
             }
         }
@@ -131,7 +120,6 @@ namespace Libreria.Controllers
                     carrito.Activo = false;
                     DB.SaveChanges();
                 }
-
                 return Content("OK");
             }
         }
@@ -151,12 +139,52 @@ namespace Libreria.Controllers
                     Ped.Email = Col["txtEmail"];
                     Ped.Telefonos = Col["txtTelefonos"];
                     Ped.Observaciones = "";
-
                     DB.Pedido.Add(Ped);
-
                     DB.SaveChanges();
+                    CorreoModel model1 = new CorreoModel();
+                    model1.Nombre = Ped.Nombres;
+                    model1.Email = Ped.Email;
+                    model1.Telefono = Ped.Telefonos;
+                    model1.Mensaje = Ped.Ciudad;
+                    using (MailMessage mm = new MailMessage())
+                    {
+                        string to = "miguelangelpachecoarteaga@gmail.com";
+                        string clave = "23212";
+                        StringBuilder sb = new StringBuilder();
+                        sb.AppendLine("Fecha :" + DateTime.Now);
+                        sb.AppendLine("Nombre: " + model1.Nombre);
+                        sb.AppendLine("Correo: " + model1.Email);
+                        sb.AppendLine("Telefono: " + model1.Telefono);
+                        sb.AppendLine("Mensaje: " + model1.Mensaje);
 
+                        DB.Configuration.LazyLoadingEnabled = false;
+                        var Car = DB.Carrito.Include("Producto").Where(P => P.SessionID == Session.SessionID).ToList();
 
+                        foreach (var item in Car)
+                        {
+                            sb.AppendLine("Producto: " + item.Producto.Nombre + " Cantidad: " + item.Cantidad);
+                        }
+
+                        sb.AppendLine("No se olvide de ejecutar el pedido en las 24 horas posteriores a la solicitud");
+                        mm.From = new MailAddress(model1.Email);
+                        mm.To.Add(new MailAddress(to));
+                        mm.Subject = model1.Asunto;
+                        mm.Body = sb.ToString();
+                        mm.IsBodyHtml = false;
+                        using (SmtpClient smtp = new SmtpClient())
+                        {
+                            smtp.Host = "smtp.gmail.com";
+                            smtp.EnableSsl = true;
+                            NetworkCredential NetworkCred = new NetworkCredential(to, clave);
+                            smtp.UseDefaultCredentials = true;
+                            smtp.Credentials = NetworkCred;
+                            smtp.Port = 587;
+                            smtp.Send(mm);
+
+                            mm.Dispose();
+                            smtp.Dispose();
+                        }
+                    }
                     return View("Gracias", "Carrito");
                 }
             }
@@ -165,6 +193,5 @@ namespace Libreria.Controllers
                 return HttpNotFound();
             }
         }
-
     }
 }
