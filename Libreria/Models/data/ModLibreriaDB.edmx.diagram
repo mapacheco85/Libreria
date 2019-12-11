@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Empresa" Width="1.5" PointX="1.5" PointY="15" IsExpanded="true" />
         <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Factura" Width="1.5" PointX="6" PointY="17.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Nivel" Width="1.5" PointX="13" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Pedido" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Producto" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Proveedor" Width="1.5" PointX="6" PointY="13.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Reserva" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
@@ -46,6 +45,7 @@
         <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Stock_Sucursal" ManuallyRouted="false" />
         <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Stock_Usuario" ManuallyRouted="false" />
         <AssociationConnector Association="Libreria.Models.data.LibreriaDB.FK_Usuario_Sujeto" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Libreria.Models.data.LibreriaDB.Pedido" Width="1.5" PointX="0.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

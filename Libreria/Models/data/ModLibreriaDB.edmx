@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Libreria.Models.data.LibreriaDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Libreria.Models.data.LibreriaDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Carrito">
           <Key>
             <PropertyRef Name="IdCarrito" />
@@ -113,7 +113,7 @@
           <Key>
             <PropertyRef Name="IdPedido" />
           </Key>
-          <Property Name="IdPedido" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdPedido" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SessionID" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="120" Nullable="false" />
           <Property Name="Direccion" Type="varchar" MaxLength="100" Nullable="false" />
@@ -677,8 +677,7 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Libreria.Models.data.LibreriaDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -799,19 +798,6 @@
           <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Acceso" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Rol" Relationship="Self.FK_Nivel_Rol" FromRole="Nivel" ToRole="Rol" />
-        </EntityType>
-        <EntityType Name="Pedido">
-          <Key>
-            <PropertyRef Name="IdPedido" />
-          </Key>
-          <Property Name="IdPedido" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="SessionID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Nombres" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Ciudad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Telefonos" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Observaciones" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
@@ -1203,7 +1189,6 @@
           <EntitySet Name="Empresa" EntityType="Self.Empresa" />
           <EntitySet Name="Factura" EntityType="Self.Factura" />
           <EntitySet Name="Nivel" EntityType="Self.Nivel" />
-          <EntitySet Name="Pedido" EntityType="Self.Pedido" />
           <EntitySet Name="Producto" EntityType="Self.Producto" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
           <EntitySet Name="Reserva" EntityType="Self.Reserva" />
@@ -1347,10 +1332,10 @@
           <FunctionImport Name="PROListarPromociones" ReturnType="Collection(Libreria.Models.data.LibreriaDB.PROListarPromociones_Result)" />
           <FunctionImport Name="PROListarUsuarios" ReturnType="Collection(Libreria.Models.data.LibreriaDB.PROListarUsuarios_Result)" />
           <FunctionImport Name="PROObtenerNroFactura" ReturnType="Collection(Int32)">
-            <Parameter Name="NroAutorizacion" Mode="In" Type="String" />
+          <Parameter Name="NroAutorizacion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PROObtenerProductoStock" ReturnType="Collection(Libreria.Models.data.LibreriaDB.PROObtenerProductoStock_Result)">
-            <Parameter Name="IdProducto" Mode="In" Type="Int16" />
+          <Parameter Name="IdProducto" Mode="In" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1382,6 +1367,7 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Pedido" EntityType="Libreria.Models.data.LibreriaDB.Pedido" />
         </EntityContainer>
         <ComplexType Name="Pro_Reportes_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
@@ -1499,6 +1485,19 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="IdPedido" />
+          </Key>
+          <Property Name="IdPedido" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SessionID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Ciudad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Telefonos" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Observaciones" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1616,20 +1615,6 @@
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Acceso" ColumnName="Acceso" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Pedido">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Pedido">
-              <MappingFragment StoreEntitySet="Pedido">
-                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
-                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Telefonos" ColumnName="Telefonos" />
-                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1939,6 +1924,20 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Libreria.Models.data.LibreriaDB.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Libreria.Models.data.LibreriaDB.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="Telefonos" ColumnName="Telefonos" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

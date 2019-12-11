@@ -37,7 +37,6 @@ namespace Libreria.Models.data
         public virtual DbSet<Empresa> Empresa { get; set; }
         public virtual DbSet<Factura> Factura { get; set; }
         public virtual DbSet<Nivel> Nivel { get; set; }
-        public virtual DbSet<Pedido> Pedido { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }
         public virtual DbSet<Reserva> Reserva { get; set; }
@@ -48,6 +47,7 @@ namespace Libreria.Models.data
         public virtual DbSet<Sujeto> Sujeto { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Pedido> Pedido { get; set; }
     
         public virtual ObjectResult<Pro_Reportes_Result> Pro_Reportes(Nullable<System.DateTime> fecha1, Nullable<System.DateTime> fecha2, string tipoReportes)
         {

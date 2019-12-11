@@ -52,7 +52,7 @@ namespace Libreria.Controllers
         public JsonResult GetSearchValueCode(string search)
         {
             var DB = new ModLibreriaDB();
-            var allsearch = DB.Producto.Where(p => p.Codigo.Contains(search)).Select(p => new { p.IdProducto, p.Codigo }).ToList();
+            var allsearch = DB.Producto.Where(p => p.Codigo.Contains(search)).Select(p => new { p.IdProducto, p.Codigo, p.Nombre }).ToList();
             return new JsonResult { Data = allsearch, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -85,7 +85,9 @@ namespace Libreria.Controllers
             {
                 using (var DB = new ModLibreriaDB())
                 {
-                    var Pros = DB.PROListarProductos().SingleOrDefault(P => P.Codigo.Equals(Col["Codigo"]));
+                    string codigo = Col["Codigo"];
+                    string[] lista = codigo.Split('-');
+                    var Pros = DB.PROListarProductos().SingleOrDefault(P => P.Codigo.Equals(lista[0]));
                     bool res = DB.Database.SqlQuery<bool>(String.Format(@"select dbo.fnControlStock({0},{1})", Pros.IdProducto, int.Parse(Col["txtCantidad"]))).FirstOrDefault<bool>();
 
                     if (res == true)
