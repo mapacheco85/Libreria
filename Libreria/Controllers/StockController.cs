@@ -15,7 +15,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 DB.Configuration.LazyLoadingEnabled = false;
                 var St = DB.Stock.Include("Producto");
@@ -28,7 +28,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Agregar()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 List<SelectListItem> Proveedores = new List<SelectListItem>();
                 Proveedores.Add(new SelectListItem()
@@ -73,7 +73,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Editar(short id)
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var St = DB.Stock.SingleOrDefault(P => P.IdStock == id);
 
@@ -111,7 +111,7 @@ namespace Libreria.Controllers
         {
             if (Col.Count > 0)
             {
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
                     var Us = DB.Usuario.SingleOrDefault(P => P.Login == User.Identity.Name);
 
@@ -162,7 +162,7 @@ namespace Libreria.Controllers
         {
             if (Col.Count > 0)
             {
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
                     var St = DB.Stock.SingleOrDefault(P => P.IdStock == id);
 
@@ -196,7 +196,7 @@ namespace Libreria.Controllers
         [HttpPost]
         public ActionResult Eliminar(short id)
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 Stock obj = DB.Stock.SingleOrDefault(U => U.IdStock == id);
                 DB.Stock.Remove(obj);

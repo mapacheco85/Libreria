@@ -15,7 +15,7 @@ namespace Libreria.Models.data
     {
         public Nullable<int> IdSujeto { get; set; }
         public string Usuario { get; set; }
-        public string LOGIN { get; set; }
+        public string Login { get; set; }
         public Nullable<short> IdSucursal { get; set; }
         public Nullable<short> IdRol { get; set; }
     }

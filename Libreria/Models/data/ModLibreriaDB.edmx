@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Libreria.Models.data.LibreriaDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LibreriaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Carrito">
           <Key>
             <PropertyRef Name="IdCarrito" />
@@ -113,7 +113,7 @@
           <Key>
             <PropertyRef Name="IdPedido" />
           </Key>
-          <Property Name="IdPedido" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPedido" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="SessionID" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="120" Nullable="false" />
           <Property Name="Direccion" Type="varchar" MaxLength="100" Nullable="false" />
@@ -574,7 +574,7 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="LibreriaModelsdataLibreriaDBStoreContainer">
+        <EntityContainer Name="LibreriaModelStoreContainer">
           <EntitySet Name="Carrito" EntityType="Self.Carrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clasificacion" EntityType="Self.Clasificacion" Schema="dbo" store:Type="Tables" />
@@ -680,22 +680,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Libreria.Models.data.LibreriaDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Carrito">
-          <Key>
-            <PropertyRef Name="IdCarrito" />
-          </Key>
-          <Property Name="IdCarrito" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SessionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdProducto" Type="Int16" Nullable="false" />
-          <Property Name="Cantidad" Type="Int16" Nullable="false" />
-          <Property Name="CostoUnidad" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="CostoTotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="FechaREG" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Transaccion" Type="Boolean" Nullable="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK_Carrito_Producto" FromRole="Carrito" ToRole="Producto" />
-        </EntityType>
+      <Schema Namespace="LibreriaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Categoria">
           <Key>
             <PropertyRef Name="IdCategoria" />
@@ -703,17 +688,7 @@
           <Property Name="IdCategoria" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Categoria" FromRole="Categoria" ToRole="Producto" />
-        </EntityType>
-        <EntityType Name="Clasificacion">
-          <Key>
-            <PropertyRef Name="IdClasificador" />
-          </Key>
-          <Property Name="IdClasificador" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Codigo" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Clasificacion" FromRole="Clasificacion" ToRole="Usuario" />
+          <NavigationProperty Name="Producto" Relationship="LibreriaModel.FK_Producto_Categoria" FromRole="Categoria" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -737,7 +712,7 @@
           <Property Name="FechaIni" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK_Descuento_Producto" FromRole="Descuento" ToRole="Producto" />
+          <NavigationProperty Name="Producto" Relationship="LibreriaModel.FK_Descuento_Producto" FromRole="Descuento" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Detalle">
           <Key>
@@ -748,8 +723,8 @@
           <Property Name="IdProducto" Type="Int16" Nullable="false" />
           <Property Name="Cantidad" Type="Int16" Nullable="false" />
           <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="Factura" Relationship="Self.FK_Detalle_Factura" FromRole="Detalle" ToRole="Factura" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK_Detalle_Producto" FromRole="Detalle" ToRole="Producto" />
+          <NavigationProperty Name="Producto" Relationship="LibreriaModel.FK_Detalle_Producto" FromRole="Detalle" ToRole="Producto" />
+          <NavigationProperty Name="Factura" Relationship="LibreriaModel.FK_Detalle_Factura" FromRole="Detalle" ToRole="Factura" />
         </EntityType>
         <EntityType Name="DetReserva">
           <Key>
@@ -759,8 +734,8 @@
           <Property Name="IdReserva" Type="Int64" Nullable="false" />
           <Property Name="IdProducto" Type="Int16" Nullable="false" />
           <Property Name="Cantidad" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK_DetReserva_Producto" FromRole="DetReserva" ToRole="Producto" />
           <NavigationProperty Name="Reserva" Relationship="Self.FK_DetReserva_Reserva" FromRole="DetReserva" ToRole="Reserva" />
+          <NavigationProperty Name="Producto" Relationship="LibreriaModel.FK_DetReserva_Producto" FromRole="DetReserva" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -769,25 +744,7 @@
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Logo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Sucursal" Relationship="Self.FK_Sucursal_Empresa" FromRole="Empresa" ToRole="Sucursal" />
-        </EntityType>
-        <EntityType Name="Factura">
-          <Key>
-            <PropertyRef Name="IdFactura" />
-          </Key>
-          <Property Name="IdFactura" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Numero" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int16" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NIT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="CodigoControl" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FechaREG" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IdUsuario" Type="Int16" Nullable="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Detalle" Relationship="Self.FK_Detalle_Factura" FromRole="Factura" ToRole="Detalle" />
-          <NavigationProperty Name="Sucursal" Relationship="Self.FK_Factura_Sucursal" FromRole="Factura" ToRole="Sucursal" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_Factura_Usuario" FromRole="Factura" ToRole="Usuario" />
+          <NavigationProperty Name="Sucursal" Relationship="LibreriaModel.FK_Sucursal_Empresa" FromRole="Empresa" ToRole="Sucursal" />
         </EntityType>
         <EntityType Name="Nivel">
           <Key>
@@ -798,24 +755,6 @@
           <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Acceso" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Rol" Relationship="Self.FK_Nivel_Rol" FromRole="Nivel" ToRole="Rol" />
-        </EntityType>
-        <EntityType Name="Producto">
-          <Key>
-            <PropertyRef Name="IdProducto" />
-          </Key>
-          <Property Name="IdProducto" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdCategoria" Type="Int16" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Foto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <Property Name="Codigo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Carrito" Relationship="Self.FK_Carrito_Producto" FromRole="Producto" ToRole="Carrito" />
-          <NavigationProperty Name="Categoria" Relationship="Self.FK_Producto_Categoria" FromRole="Producto" ToRole="Categoria" />
-          <NavigationProperty Name="Descuento" Relationship="Self.FK_Descuento_Producto" FromRole="Producto" ToRole="Descuento" />
-          <NavigationProperty Name="Detalle" Relationship="Self.FK_Detalle_Producto" FromRole="Producto" ToRole="Detalle" />
-          <NavigationProperty Name="DetReserva" Relationship="Self.FK_DetReserva_Producto" FromRole="Producto" ToRole="DetReserva" />
-          <NavigationProperty Name="Stock" Relationship="Self.FK_Stock_Producto" FromRole="Producto" ToRole="Stock" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
@@ -846,20 +785,7 @@
           <Property Name="IdRol" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Nivel" Relationship="Self.FK_Nivel_Rol" FromRole="Rol" ToRole="Nivel" />
-          <NavigationProperty Name="RolUsuario" Relationship="Self.FK_RolUsuario_Rol" FromRole="Rol" ToRole="RolUsuario" />
-        </EntityType>
-        <EntityType Name="RolUsuario">
-          <Key>
-            <PropertyRef Name="IdRolUsuario" />
-          </Key>
-          <Property Name="IdRolUsuario" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUsuario" Type="Int16" />
-          <Property Name="IdRol" Type="Int16" />
-          <Property Name="IdSucursal" Type="Int16" />
-          <Property Name="FechaREG" Type="DateTime" Precision="3" />
-          <Property Name="Activo" Type="Boolean" />
-          <NavigationProperty Name="Rol" Relationship="Self.FK_RolUsuario_Rol" FromRole="RolUsuario" ToRole="Rol" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_RolUsuario_Usuario" FromRole="RolUsuario" ToRole="Usuario" />
+          <NavigationProperty Name="RolUsuario" Relationship="LibreriaModel.FK_RolUsuario_Rol" FromRole="Rol" ToRole="RolUsuario" />
         </EntityType>
         <EntityType Name="Stock">
           <Key>
@@ -876,104 +802,11 @@
           <Property Name="IdUsuario" Type="Int16" Nullable="false" />
           <Property Name="FechaREG" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK_Stock_Producto" FromRole="Stock" ToRole="Producto" />
           <NavigationProperty Name="Proveedor" Relationship="Self.FK_Stock_Proveedor" FromRole="Stock" ToRole="Proveedor" />
-          <NavigationProperty Name="Sucursal" Relationship="Self.FK_Stock_Sucursal" FromRole="Stock" ToRole="Sucursal" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_Stock_Usuario" FromRole="Stock" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario" Relationship="LibreriaModel.FK_Stock_Usuario" FromRole="Stock" ToRole="Usuario" />
+          <NavigationProperty Name="Producto" Relationship="LibreriaModel.FK_Stock_Producto" FromRole="Stock" ToRole="Producto" />
+          <NavigationProperty Name="Sucursal" Relationship="LibreriaModel.FK_Stock_Sucursal" FromRole="Stock" ToRole="Sucursal" />
         </EntityType>
-        <EntityType Name="Sucursal">
-          <Key>
-            <PropertyRef Name="IdSucursal" />
-          </Key>
-          <Property Name="IdSucursal" Type="Int16" Nullable="false" />
-          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NIT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="NroAutorizacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Llave" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LimiteEmision" Type="DateTime" Precision="0" />
-          <Property Name="IdUsuarioRES" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Empresa" Relationship="Self.FK_Sucursal_Empresa" FromRole="Sucursal" ToRole="Empresa" />
-          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Sucursal" FromRole="Sucursal" ToRole="Factura" />
-          <NavigationProperty Name="Stock" Relationship="Self.FK_Stock_Sucursal" FromRole="Sucursal" ToRole="Stock" />
-        </EntityType>
-        <EntityType Name="Sujeto">
-          <Key>
-            <PropertyRef Name="IdSujeto" />
-          </Key>
-          <Property Name="IdSujeto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombres" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Apellidos" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CI_NIT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Telefonos" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Direccion" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RazonSocial" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Sujeto" FromRole="Sujeto" ToRole="Usuario" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-          </Key>
-          <Property Name="IdUsuario" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdSujeto" Type="Int32" />
-          <Property Name="IdClasificacion" Type="Int16" />
-          <Property Name="Login" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Pwd" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Clasificacion" Relationship="Self.FK_Usuario_Clasificacion" FromRole="Usuario" ToRole="Clasificacion" />
-          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Usuario" FromRole="Usuario" ToRole="Factura" />
-          <NavigationProperty Name="RolUsuario" Relationship="Self.FK_RolUsuario_Usuario" FromRole="Usuario" ToRole="RolUsuario" />
-          <NavigationProperty Name="Stock" Relationship="Self.FK_Stock_Usuario" FromRole="Usuario" ToRole="Stock" />
-          <NavigationProperty Name="Sujeto" Relationship="Self.FK_Usuario_Sujeto" FromRole="Usuario" ToRole="Sujeto" />
-        </EntityType>
-        <Association Name="FK_Carrito_Producto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="Carrito">
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Producto_Categoria">
-          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
-          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categoria">
-              <PropertyRef Name="IdCategoria" />
-            </Principal>
-            <Dependent Role="Producto">
-              <PropertyRef Name="IdCategoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Usuario_Clasificacion">
-          <End Role="Clasificacion" Type="Self.Clasificacion" Multiplicity="0..1" />
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clasificacion">
-              <PropertyRef Name="IdClasificador" />
-            </Principal>
-            <Dependent Role="Usuario">
-              <PropertyRef Name="IdClasificacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Reserva_Cliente">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
           <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
@@ -983,54 +816,6 @@
             </Principal>
             <Dependent Role="Reserva">
               <PropertyRef Name="IdCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Descuento_Producto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="Descuento" Type="Self.Descuento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="Descuento">
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Detalle_Factura">
-          <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
-          <End Role="Detalle" Type="Self.Detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Factura">
-              <PropertyRef Name="IdFactura" />
-            </Principal>
-            <Dependent Role="Detalle">
-              <PropertyRef Name="IdFactura" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Detalle_Producto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="Detalle" Type="Self.Detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="Detalle">
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DetReserva_Producto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="DetReserva" Type="Self.DetReserva" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="DetReserva">
-              <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1046,42 +831,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sucursal_Empresa">
-          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
-          <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="IdEmpresa" />
-            </Principal>
-            <Dependent Role="Sucursal">
-              <PropertyRef Name="IdEmpresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Factura_Sucursal">
-          <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="1" />
-          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sucursal">
-              <PropertyRef Name="IdSucursal" />
-            </Principal>
-            <Dependent Role="Factura">
-              <PropertyRef Name="IdSucursal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Factura_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Factura">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Nivel_Rol">
           <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="Nivel" Type="Self.Nivel" Multiplicity="*" />
@@ -1091,18 +840,6 @@
             </Principal>
             <Dependent Role="Nivel">
               <PropertyRef Name="IdRol" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Stock_Producto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="Stock">
-              <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1118,224 +855,165 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RolUsuario_Rol">
-          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
-          <End Role="RolUsuario" Type="Self.RolUsuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Rol">
-              <PropertyRef Name="IdRol" />
-            </Principal>
-            <Dependent Role="RolUsuario">
-              <PropertyRef Name="IdRol" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RolUsuario_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="RolUsuario" Type="Self.RolUsuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="RolUsuario">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Stock_Sucursal">
-          <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="1" />
-          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sucursal">
-              <PropertyRef Name="IdSucursal" />
-            </Principal>
-            <Dependent Role="Stock">
-              <PropertyRef Name="IdSucursal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Stock_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Stock">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Usuario_Sujeto">
-          <End Role="Sujeto" Type="Self.Sujeto" Multiplicity="0..1" />
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sujeto">
-              <PropertyRef Name="IdSujeto" />
-            </Principal>
-            <Dependent Role="Usuario">
-              <PropertyRef Name="IdSujeto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="ModLibreriaDB" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Carrito" EntityType="Self.Carrito" />
+        <EntityContainer Name="LibreriaDB" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" />
-          <EntitySet Name="Clasificacion" EntityType="Self.Clasificacion" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" />
           <EntitySet Name="Descuento" EntityType="Self.Descuento" />
           <EntitySet Name="Detalle" EntityType="Self.Detalle" />
           <EntitySet Name="DetReserva" EntityType="Self.DetReserva" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" />
-          <EntitySet Name="Factura" EntityType="Self.Factura" />
           <EntitySet Name="Nivel" EntityType="Self.Nivel" />
-          <EntitySet Name="Producto" EntityType="Self.Producto" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
           <EntitySet Name="Reserva" EntityType="Self.Reserva" />
           <EntitySet Name="Rol" EntityType="Self.Rol" />
-          <EntitySet Name="RolUsuario" EntityType="Self.RolUsuario" />
           <EntitySet Name="Stock" EntityType="Self.Stock" />
-          <EntitySet Name="Sucursal" EntityType="Self.Sucursal" />
-          <EntitySet Name="Sujeto" EntityType="Self.Sujeto" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <AssociationSet Name="FK_Carrito_Producto" Association="Self.FK_Carrito_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Carrito" EntitySet="Carrito" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
-            <End Role="Categoria" EntitySet="Categoria" />
-            <End Role="Producto" EntitySet="Producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Usuario_Clasificacion" Association="Self.FK_Usuario_Clasificacion">
-            <End Role="Clasificacion" EntitySet="Clasificacion" />
-            <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>
           <AssociationSet Name="FK_Reserva_Cliente" Association="Self.FK_Reserva_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Reserva" EntitySet="Reserva" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Descuento_Producto" Association="Self.FK_Descuento_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Descuento" EntitySet="Descuento" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Detalle_Factura" Association="Self.FK_Detalle_Factura">
-            <End Role="Factura" EntitySet="Factura" />
-            <End Role="Detalle" EntitySet="Detalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Detalle_Producto" Association="Self.FK_Detalle_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Detalle" EntitySet="Detalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetReserva_Producto" Association="Self.FK_DetReserva_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="DetReserva" EntitySet="DetReserva" />
           </AssociationSet>
           <AssociationSet Name="FK_DetReserva_Reserva" Association="Self.FK_DetReserva_Reserva">
             <End Role="Reserva" EntitySet="Reserva" />
             <End Role="DetReserva" EntitySet="DetReserva" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sucursal_Empresa" Association="Self.FK_Sucursal_Empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="Sucursal" EntitySet="Sucursal" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Factura_Sucursal" Association="Self.FK_Factura_Sucursal">
-            <End Role="Sucursal" EntitySet="Sucursal" />
-            <End Role="Factura" EntitySet="Factura" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Factura_Usuario" Association="Self.FK_Factura_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Factura" EntitySet="Factura" />
-          </AssociationSet>
           <AssociationSet Name="FK_Nivel_Rol" Association="Self.FK_Nivel_Rol">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Nivel" EntitySet="Nivel" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Stock_Producto" Association="Self.FK_Stock_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Stock" EntitySet="Stock" />
           </AssociationSet>
           <AssociationSet Name="FK_Stock_Proveedor" Association="Self.FK_Stock_Proveedor">
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="Stock" EntitySet="Stock" />
           </AssociationSet>
-          <AssociationSet Name="FK_RolUsuario_Rol" Association="Self.FK_RolUsuario_Rol">
+          <EntitySet Name="RolUsuario" EntityType="LibreriaModel.RolUsuario" />
+          <AssociationSet Name="FK_RolUsuario_Rol" Association="LibreriaModel.FK_RolUsuario_Rol">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="RolUsuario" EntitySet="RolUsuario" />
           </AssociationSet>
-          <AssociationSet Name="FK_RolUsuario_Usuario" Association="Self.FK_RolUsuario_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="RolUsuario" EntitySet="RolUsuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Stock_Sucursal" Association="Self.FK_Stock_Sucursal">
-            <End Role="Sucursal" EntitySet="Sucursal" />
-            <End Role="Stock" EntitySet="Stock" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Stock_Usuario" Association="Self.FK_Stock_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Stock" EntitySet="Stock" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Usuario_Sujeto" Association="Self.FK_Usuario_Sujeto">
-            <End Role="Sujeto" EntitySet="Sujeto" />
-            <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>
-          <FunctionImport Name="Pro_Reportes" ReturnType="Collection(Libreria.Models.data.LibreriaDB.Pro_Reportes_Result)">
-            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
-            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
-            <Parameter Name="TipoReportes" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Pro_Reportes_Caja" ReturnType="Collection(Libreria.Models.data.LibreriaDB.Pro_Reportes_Caja_Result)">
-            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
-            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
-            <Parameter Name="TipoReportes" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Pro_Reportes_Clientes" ReturnType="Collection(Libreria.Models.data.LibreriaDB.Pro_Reportes_Clientes_Result)">
-            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
-            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
-            <Parameter Name="TipoReportes" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Pro_Reportes_Productos" ReturnType="Collection(Libreria.Models.data.LibreriaDB.Pro_Reportes_Productos_Result)">
-            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
-            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
-            <Parameter Name="TipoReportes" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Pro_Reportes_Promociones" ReturnType="Collection(Libreria.Models.data.LibreriaDB.Pro_Reportes_Promociones_Result)">
-            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
-            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
-            <Parameter Name="TipoReportes" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Pro_Reportes_Proveedor" ReturnType="Collection(Libreria.Models.data.LibreriaDB.Pro_Reportes_Proveedor_Result)">
-            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
-            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
-            <Parameter Name="TipoReportes" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Pro_Reportes_Reservas" ReturnType="Collection(Libreria.Models.data.LibreriaDB.Pro_Reportes_Reservas_Result)">
-            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
-            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
-            <Parameter Name="TipoReportes" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Pro_Reportes_Usuarios" ReturnType="Collection(Libreria.Models.data.LibreriaDB.Pro_Reportes_Usuarios_Result)">
-            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
-            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
-            <Parameter Name="TipoReportes" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="PROActualizarStock">
-            <Parameter Name="producto" Mode="In" Type="Int32" />
-            <Parameter Name="cantidad" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="PROAutenticar" ReturnType="Collection(Libreria.Models.data.LibreriaDB.PROAutenticar_Result)">
+          <FunctionImport Name="PROAutenticar" ReturnType="Collection(LibreriaModel.PROAutenticar_Result)">
             <Parameter Name="Login" Mode="In" Type="String" />
             <Parameter Name="Pwd" Mode="In" Type="String" />
             <Parameter Name="IdSucursal" Mode="In" Type="Int16" />
           </FunctionImport>
-          <FunctionImport Name="PROListarProductos" ReturnType="Collection(Libreria.Models.data.LibreriaDB.PROListarProductos_Result)" />
-          <FunctionImport Name="PROListarPromociones" ReturnType="Collection(Libreria.Models.data.LibreriaDB.PROListarPromociones_Result)" />
-          <FunctionImport Name="PROListarUsuarios" ReturnType="Collection(Libreria.Models.data.LibreriaDB.PROListarUsuarios_Result)" />
+          <EntitySet Name="Clasificacion" EntityType="LibreriaModel.Clasificacion" />
+          <EntitySet Name="Sujeto" EntityType="LibreriaModel.Sujeto" />
+          <EntitySet Name="Usuario" EntityType="LibreriaModel.Usuario" />
+          <AssociationSet Name="FK_Usuario_Clasificacion" Association="LibreriaModel.FK_Usuario_Clasificacion">
+            <End Role="Clasificacion" EntitySet="Clasificacion" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolUsuario_Usuario" Association="LibreriaModel.FK_RolUsuario_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="RolUsuario" EntitySet="RolUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Usuario" Association="LibreriaModel.FK_Stock_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Stock" EntitySet="Stock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Sujeto" Association="LibreriaModel.FK_Usuario_Sujeto">
+            <End Role="Sujeto" EntitySet="Sujeto" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <EntitySet Name="Producto" EntityType="LibreriaModel.Producto" />
+          <AssociationSet Name="FK_Producto_Categoria" Association="LibreriaModel.FK_Producto_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Descuento_Producto" Association="LibreriaModel.FK_Descuento_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Descuento" EntitySet="Descuento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Detalle_Producto" Association="LibreriaModel.FK_Detalle_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Detalle" EntitySet="Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetReserva_Producto" Association="LibreriaModel.FK_DetReserva_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetReserva" EntitySet="DetReserva" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Producto" Association="LibreriaModel.FK_Stock_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Stock" EntitySet="Stock" />
+          </AssociationSet>
+          <FunctionImport Name="PROListarPromociones" ReturnType="Collection(LibreriaModel.PROListarPromociones_Result)" />
+          <EntitySet Name="Carrito" EntityType="LibreriaModel.Carrito" />
+          <AssociationSet Name="FK_Carrito_Producto" Association="LibreriaModel.FK_Carrito_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Carrito" EntitySet="Carrito" />
+          </AssociationSet>
+          <FunctionImport Name="PROListarProductos" ReturnType="Collection(LibreriaModel.PROListarProductos_Result)" />
+          <FunctionImport Name="PROObtenerProductoStock" ReturnType="Collection(LibreriaModel.PROObtenerProductoStock_Result)">
+          <Parameter Name="IdProducto" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <EntitySet Name="Pedido" EntityType="LibreriaModel.Pedido" />
+          <EntitySet Name="Factura" EntityType="LibreriaModel.Factura" />
+          <AssociationSet Name="FK_Detalle_Factura" Association="LibreriaModel.FK_Detalle_Factura">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="Detalle" EntitySet="Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Usuario" Association="LibreriaModel.FK_Factura_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
           <FunctionImport Name="PROObtenerNroFactura" ReturnType="Collection(Int32)">
           <Parameter Name="NroAutorizacion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="PROObtenerProductoStock" ReturnType="Collection(Libreria.Models.data.LibreriaDB.PROObtenerProductoStock_Result)">
-          <Parameter Name="IdProducto" Mode="In" Type="Int16" />
+          <EntitySet Name="Sucursal" EntityType="LibreriaModel.Sucursal" />
+          <AssociationSet Name="FK_Sucursal_Empresa" Association="LibreriaModel.FK_Sucursal_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Sucursal" EntitySet="Sucursal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Sucursal" Association="LibreriaModel.FK_Factura_Sucursal">
+            <End Role="Sucursal" EntitySet="Sucursal" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Sucursal" Association="LibreriaModel.FK_Stock_Sucursal">
+            <End Role="Sucursal" EntitySet="Sucursal" />
+            <End Role="Stock" EntitySet="Stock" />
+          </AssociationSet>
+          <FunctionImport Name="PROListarUsuarios" ReturnType="Collection(LibreriaModel.PROListarUsuarios_Result)" />
+          <FunctionImport Name="PROActualizarStock">
+            <Parameter Name="producto" Mode="In" Type="Int32" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="sysdiagrams" EntityType="LibreriaModel.sysdiagrams" />
+          <FunctionImport Name="Pro_Reportes" ReturnType="Collection(LibreriaModel.Pro_Reportes_Result)">
+            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
+            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
+            <Parameter Name="TipoReportes" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Pro_Reportes_Caja" ReturnType="Collection(LibreriaModel.Pro_Reportes_Caja_Result)">
+            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
+            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
+            <Parameter Name="TipoReportes" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Pro_Reportes_Clientes" ReturnType="Collection(LibreriaModel.Pro_Reportes_Clientes_Result)">
+            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
+            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
+            <Parameter Name="TipoReportes" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Pro_Reportes_Productos" ReturnType="Collection(LibreriaModel.Pro_Reportes_Productos_Result)">
+            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
+            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
+            <Parameter Name="TipoReportes" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Pro_Reportes_Promociones" ReturnType="Collection(LibreriaModel.Pro_Reportes_Promociones_Result)">
+            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
+            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
+            <Parameter Name="TipoReportes" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Pro_Reportes_Proveedor" ReturnType="Collection(LibreriaModel.Pro_Reportes_Proveedor_Result)">
+            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
+            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
+            <Parameter Name="TipoReportes" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Pro_Reportes_Reservas" ReturnType="Collection(LibreriaModel.Pro_Reportes_Reservas_Result)">
+            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
+            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
+            <Parameter Name="TipoReportes" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Pro_Reportes_Usuarios" ReturnType="Collection(LibreriaModel.Pro_Reportes_Usuarios_Result)">
+            <Parameter Name="Fecha1" Mode="In" Type="DateTime" />
+            <Parameter Name="Fecha2" Mode="In" Type="DateTime" />
+            <Parameter Name="TipoReportes" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1353,11 +1031,11 @@
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Libreria.Models.data.LibreriaDB.sp_helpdiagramdefinition_Result)">
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(LibreriaModel.sp_helpdiagramdefinition_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Libreria.Models.data.LibreriaDB.sp_helpdiagrams_Result)">
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(LibreriaModel.sp_helpdiagrams_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1367,8 +1045,387 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="Pedido" EntityType="Libreria.Models.data.LibreriaDB.Pedido" />
         </EntityContainer>
+        <EntityType Name="RolUsuario">
+          <Key>
+            <PropertyRef Name="IdRolUsuario" />
+          </Key>
+          <Property Name="IdRolUsuario" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int16" />
+          <Property Name="IdRol" Type="Int16" />
+          <Property Name="IdSucursal" Type="Int16" />
+          <Property Name="FechaREG" Type="DateTime" Precision="3" />
+          <Property Name="Activo" Type="Boolean" />
+          <NavigationProperty Name="Rol" Relationship="LibreriaModel.FK_RolUsuario_Rol" FromRole="RolUsuario" ToRole="Rol" />
+          <NavigationProperty Name="Usuario" Relationship="LibreriaModel.FK_RolUsuario_Usuario" FromRole="RolUsuario" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_RolUsuario_Rol">
+          <End Type="LibreriaModel.Rol" Role="Rol" Multiplicity="0..1" />
+          <End Type="LibreriaModel.RolUsuario" Role="RolUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="RolUsuario">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="PROAutenticar_Result">
+          <Property Type="Int32" Name="IdSujeto" Nullable="true" />
+          <Property Type="String" Name="Usuario" Nullable="false" MaxLength="241" />
+          <Property Type="String" Name="Login" Nullable="false" MaxLength="15" />
+          <Property Type="Int16" Name="IdSucursal" Nullable="true" />
+          <Property Type="Int16" Name="IdRol" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Clasificacion">
+          <Key>
+            <PropertyRef Name="IdClasificador" />
+          </Key>
+          <Property Name="IdClasificador" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Usuario" Relationship="LibreriaModel.FK_Usuario_Clasificacion" FromRole="Clasificacion" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Sujeto">
+          <Key>
+            <PropertyRef Name="IdSujeto" />
+          </Key>
+          <Property Name="IdSujeto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="CI_NIT" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Telefonos" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Usuario" Relationship="LibreriaModel.FK_Usuario_Sujeto" FromRole="Sujeto" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdSujeto" Type="Int32" />
+          <Property Name="IdClasificacion" Type="Int16" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Pwd" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Clasificacion" Relationship="LibreriaModel.FK_Usuario_Clasificacion" FromRole="Usuario" ToRole="Clasificacion" />
+          <NavigationProperty Name="RolUsuario" Relationship="LibreriaModel.FK_RolUsuario_Usuario" FromRole="Usuario" ToRole="RolUsuario" />
+          <NavigationProperty Name="Stock" Relationship="LibreriaModel.FK_Stock_Usuario" FromRole="Usuario" ToRole="Stock" />
+          <NavigationProperty Name="Sujeto" Relationship="LibreriaModel.FK_Usuario_Sujeto" FromRole="Usuario" ToRole="Sujeto" />
+          <NavigationProperty Name="Factura" Relationship="LibreriaModel.FK_Factura_Usuario" FromRole="Usuario" ToRole="Factura" />
+        </EntityType>
+        <Association Name="FK_Usuario_Clasificacion">
+          <End Type="LibreriaModel.Clasificacion" Role="Clasificacion" Multiplicity="0..1" />
+          <End Type="LibreriaModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clasificacion">
+              <PropertyRef Name="IdClasificador" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdClasificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolUsuario_Usuario">
+          <End Type="LibreriaModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="LibreriaModel.RolUsuario" Role="RolUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="RolUsuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stock_Usuario">
+          <End Type="LibreriaModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="LibreriaModel.Stock" Role="Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Sujeto">
+          <End Type="LibreriaModel.Sujeto" Role="Sujeto" Multiplicity="0..1" />
+          <End Type="LibreriaModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sujeto">
+              <PropertyRef Name="IdSujeto" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdSujeto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCategoria" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Foto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Categoria" Relationship="LibreriaModel.FK_Producto_Categoria" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="Descuento" Relationship="LibreriaModel.FK_Descuento_Producto" FromRole="Producto" ToRole="Descuento" />
+          <NavigationProperty Name="Detalle" Relationship="LibreriaModel.FK_Detalle_Producto" FromRole="Producto" ToRole="Detalle" />
+          <NavigationProperty Name="DetReserva" Relationship="LibreriaModel.FK_DetReserva_Producto" FromRole="Producto" ToRole="DetReserva" />
+          <NavigationProperty Name="Stock" Relationship="LibreriaModel.FK_Stock_Producto" FromRole="Producto" ToRole="Stock" />
+          <NavigationProperty Name="Carrito" Relationship="LibreriaModel.FK_Carrito_Producto" FromRole="Producto" ToRole="Carrito" />
+          <Property Name="Codigo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Producto_Categoria">
+          <End Type="LibreriaModel.Categoria" Role="Categoria" Multiplicity="1" />
+          <End Type="LibreriaModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Descuento_Producto">
+          <End Type="LibreriaModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="LibreriaModel.Descuento" Role="Descuento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="Descuento">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Detalle_Producto">
+          <End Type="LibreriaModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="LibreriaModel.Detalle" Role="Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="Detalle">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetReserva_Producto">
+          <End Type="LibreriaModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="LibreriaModel.DetReserva" Role="DetReserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="DetReserva">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stock_Producto">
+          <End Type="LibreriaModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="LibreriaModel.Stock" Role="Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="PROListarPromociones_Result">
+          <Property Type="Int16" Name="IdProducto" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="Int16" Name="Cantidad" Nullable="false" />
+          <Property Type="Decimal" Name="CostoVenta" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="CostoPromo" Nullable="true" Precision="19" />
+          <Property Type="String" Name="Foto" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <EntityType Name="Carrito">
+          <Key>
+            <PropertyRef Name="IdCarrito" />
+          </Key>
+          <Property Name="IdCarrito" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SessionID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdProducto" Type="Int16" Nullable="false" />
+          <Property Name="Cantidad" Type="Int16" Nullable="false" />
+          <Property Name="CostoUnidad" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CostoTotal" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="FechaREG" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Transaccion" Type="Boolean" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="LibreriaModel.FK_Carrito_Producto" FromRole="Carrito" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FK_Carrito_Producto">
+          <End Type="LibreriaModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="LibreriaModel.Carrito" Role="Carrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="Carrito">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="PROListarProductos_Result">
+          <Property Type="Int16" Name="IdProducto" Nullable="false" />
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Foto" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="CostoVenta" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Cobrar" Nullable="true" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="PROObtenerProductoStock_Result">
+          <Property Type="Int16" Name="IdProducto" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Foto" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="CostoVenta" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Cobrar" Nullable="true" Precision="19" />
+        </ComplexType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="IdPedido" />
+          </Key>
+          <Property Name="IdPedido" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="SessionID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Ciudad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Telefonos" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Observaciones" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="IdFactura" />
+          </Key>
+          <Property Name="IdFactura" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NIT" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CodigoControl" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaREG" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuario" Type="Int16" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Detalle" Relationship="LibreriaModel.FK_Detalle_Factura" FromRole="Factura" ToRole="Detalle" />
+          <NavigationProperty Name="Usuario" Relationship="LibreriaModel.FK_Factura_Usuario" FromRole="Factura" ToRole="Usuario" />
+          <NavigationProperty Name="Sucursal" Relationship="LibreriaModel.FK_Factura_Sucursal" FromRole="Factura" ToRole="Sucursal" />
+        </EntityType>
+        <Association Name="FK_Detalle_Factura">
+          <End Type="LibreriaModel.Factura" Role="Factura" Multiplicity="1" />
+          <End Type="LibreriaModel.Detalle" Role="Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="IdFactura" />
+            </Principal>
+            <Dependent Role="Detalle">
+              <PropertyRef Name="IdFactura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Usuario">
+          <End Type="LibreriaModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="LibreriaModel.Factura" Role="Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Sucursal">
+          <Key>
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="IdSucursal" Type="Int16" Nullable="false" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NIT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="NroAutorizacion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Llave" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LimiteEmision" Type="DateTime" Precision="0" />
+          <Property Name="IdUsuarioRES" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Empresa" Relationship="LibreriaModel.FK_Sucursal_Empresa" FromRole="Sucursal" ToRole="Empresa" />
+          <NavigationProperty Name="Factura" Relationship="LibreriaModel.FK_Factura_Sucursal" FromRole="Sucursal" ToRole="Factura" />
+          <NavigationProperty Name="Stock" Relationship="LibreriaModel.FK_Stock_Sucursal" FromRole="Sucursal" ToRole="Stock" />
+        </EntityType>
+        <Association Name="FK_Sucursal_Empresa">
+          <End Type="LibreriaModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="LibreriaModel.Sucursal" Role="Sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Sucursal">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Sucursal">
+          <End Type="LibreriaModel.Sucursal" Role="Sucursal" Multiplicity="1" />
+          <End Type="LibreriaModel.Factura" Role="Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sucursal">
+              <PropertyRef Name="IdSucursal" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdSucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stock_Sucursal">
+          <End Type="LibreriaModel.Sucursal" Role="Sucursal" Multiplicity="1" />
+          <End Type="LibreriaModel.Stock" Role="Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sucursal">
+              <PropertyRef Name="IdSucursal" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="IdSucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="PROListarUsuarios_Result">
+          <Property Type="Int32" Name="IdSujeto" Nullable="false" />
+          <Property Type="String" Name="Nombres" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="Apellidos" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="CI_NIT" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Telefonos" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="120" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="Login" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Rol" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <ComplexType Name="Pro_Reportes_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="NIT" Nullable="false" MaxLength="20" />
@@ -1429,51 +1486,6 @@
           <Property Type="String" Name="Email" Nullable="false" MaxLength="120" />
           <Property Type="String" Name="Rol" Nullable="false" MaxLength="30" />
         </ComplexType>
-        <ComplexType Name="PROAutenticar_Result">
-          <Property Type="Int32" Name="IdSujeto" Nullable="true" />
-          <Property Type="String" Name="Usuario" Nullable="false" MaxLength="241" />
-          <Property Type="String" Name="LOGIN" Nullable="false" MaxLength="15" />
-          <Property Type="Int16" Name="IdSucursal" Nullable="true" />
-          <Property Type="Int16" Name="IdRol" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="PROListarProductos_Result">
-          <Property Type="Int16" Name="IdProducto" Nullable="false" />
-          <Property Type="String" Name="Codigo" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="60" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Foto" Nullable="true" MaxLength="100" />
-          <Property Type="Decimal" Name="CostoVenta" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="Cobrar" Nullable="true" Precision="19" />
-        </ComplexType>
-        <ComplexType Name="PROListarPromociones_Result">
-          <Property Type="Int16" Name="IdProducto" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="60" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
-          <Property Type="Int16" Name="Cantidad" Nullable="false" />
-          <Property Type="Decimal" Name="CostoVenta" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="CostoPromo" Nullable="true" Precision="19" />
-          <Property Type="String" Name="Foto" Nullable="true" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="PROListarUsuarios_Result">
-          <Property Type="Int32" Name="IdSujeto" Nullable="false" />
-          <Property Type="Int64" Name="Numero" Nullable="true" />
-          <Property Type="String" Name="Nombres" Nullable="false" MaxLength="120" />
-          <Property Type="String" Name="Apellidos" Nullable="false" MaxLength="120" />
-          <Property Type="String" Name="CI_NIT" Nullable="false" MaxLength="15" />
-          <Property Type="String" Name="Telefonos" Nullable="false" MaxLength="25" />
-          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="120" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="120" />
-          <Property Type="String" Name="LOGIN" Nullable="false" MaxLength="15" />
-          <Property Type="String" Name="Rol" Nullable="false" MaxLength="30" />
-        </ComplexType>
-        <ComplexType Name="PROObtenerProductoStock_Result">
-          <Property Type="Int16" Name="IdProducto" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="60" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Foto" Nullable="true" MaxLength="100" />
-          <Property Type="Decimal" Name="CostoVenta" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="Cobrar" Nullable="true" Precision="19" />
-        </ComplexType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -1485,42 +1497,14 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <EntityType Name="Pedido">
-          <Key>
-            <PropertyRef Name="IdPedido" />
-          </Key>
-          <Property Name="IdPedido" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SessionID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Ciudad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="Telefonos" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="Observaciones" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-        </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="LibreriaModelsdataLibreriaDBStoreContainer" CdmEntityContainer="ModLibreriaDB">
-          <EntitySetMapping Name="Carrito">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Carrito">
-              <MappingFragment StoreEntitySet="Carrito">
-                <ScalarProperty Name="IdCarrito" ColumnName="IdCarrito" />
-                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="CostoUnidad" ColumnName="CostoUnidad" />
-                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
-                <ScalarProperty Name="FechaREG" ColumnName="FechaREG" />
-                <ScalarProperty Name="Transaccion" ColumnName="Transaccion" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+        <EntityContainerMapping StorageEntityContainer="LibreriaModelStoreContainer" CdmEntityContainer="LibreriaDB">
           <EntitySetMapping Name="Categoria">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Categoria">
+            <EntityTypeMapping TypeName="LibreriaModel.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
                 <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1528,18 +1512,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Clasificacion">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Clasificacion">
-              <MappingFragment StoreEntitySet="Clasificacion">
-                <ScalarProperty Name="IdClasificador" ColumnName="IdClasificador" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Cliente">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Cliente">
+            <EntityTypeMapping TypeName="LibreriaModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1551,7 +1525,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Descuento">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Descuento">
+            <EntityTypeMapping TypeName="LibreriaModel.Descuento">
               <MappingFragment StoreEntitySet="Descuento">
                 <ScalarProperty Name="IdDescuento" ColumnName="IdDescuento" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
@@ -1563,7 +1537,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Detalle">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Detalle">
+            <EntityTypeMapping TypeName="LibreriaModel.Detalle">
               <MappingFragment StoreEntitySet="Detalle">
                 <ScalarProperty Name="IdDetalle" ColumnName="IdDetalle" />
                 <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
@@ -1574,7 +1548,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DetReserva">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.DetReserva">
+            <EntityTypeMapping TypeName="LibreriaModel.DetReserva">
               <MappingFragment StoreEntitySet="DetReserva">
                 <ScalarProperty Name="IdDetReserva" ColumnName="IdDetReserva" />
                 <ScalarProperty Name="IdReserva" ColumnName="IdReserva" />
@@ -1584,7 +1558,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Empresa">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Empresa">
+            <EntityTypeMapping TypeName="LibreriaModel.Empresa">
               <MappingFragment StoreEntitySet="Empresa">
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1592,24 +1566,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Factura">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Factura">
-              <MappingFragment StoreEntitySet="Factura">
-                <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="NIT" ColumnName="NIT" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="CodigoControl" ColumnName="CodigoControl" />
-                <ScalarProperty Name="FechaREG" ColumnName="FechaREG" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Nivel">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Nivel">
+            <EntityTypeMapping TypeName="LibreriaModel.Nivel">
               <MappingFragment StoreEntitySet="Nivel">
                 <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
@@ -1618,21 +1576,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Producto">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Producto">
-              <MappingFragment StoreEntitySet="Producto">
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Foto" ColumnName="Foto" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Proveedor">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Proveedor">
+            <EntityTypeMapping TypeName="LibreriaModel.Proveedor">
               <MappingFragment StoreEntitySet="Proveedor">
                 <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1644,7 +1589,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Reserva">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Reserva">
+            <EntityTypeMapping TypeName="LibreriaModel.Reserva">
               <MappingFragment StoreEntitySet="Reserva">
                 <ScalarProperty Name="IdReserva" ColumnName="IdReserva" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
@@ -1653,27 +1598,15 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Rol">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Rol">
+            <EntityTypeMapping TypeName="LibreriaModel.Rol">
               <MappingFragment StoreEntitySet="Rol">
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RolUsuario">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.RolUsuario">
-              <MappingFragment StoreEntitySet="RolUsuario">
-                <ScalarProperty Name="IdRolUsuario" ColumnName="IdRolUsuario" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="FechaREG" ColumnName="FechaREG" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Stock">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Stock">
+            <EntityTypeMapping TypeName="LibreriaModel.Stock">
               <MappingFragment StoreEntitySet="Stock">
                 <ScalarProperty Name="IdStock" ColumnName="IdStock" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
@@ -1689,178 +1622,81 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sucursal">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Sucursal">
-              <MappingFragment StoreEntitySet="Sucursal">
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="NIT" ColumnName="NIT" />
-                <ScalarProperty Name="NroAutorizacion" ColumnName="NroAutorizacion" />
-                <ScalarProperty Name="Llave" ColumnName="Llave" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="LimiteEmision" ColumnName="LimiteEmision" />
-                <ScalarProperty Name="IdUsuarioRES" ColumnName="IdUsuarioRES" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sujeto">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Sujeto">
-              <MappingFragment StoreEntitySet="Sujeto">
-                <ScalarProperty Name="IdSujeto" ColumnName="IdSujeto" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="CI_NIT" ColumnName="CI_NIT" />
-                <ScalarProperty Name="Telefonos" ColumnName="Telefonos" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Usuario">
-              <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdSujeto" ColumnName="IdSujeto" />
-                <ScalarProperty Name="IdClasificacion" ColumnName="IdClasificacion" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Pwd" ColumnName="Pwd" />
+          <EntitySetMapping Name="RolUsuario">
+            <EntityTypeMapping TypeName="LibreriaModel.RolUsuario">
+              <MappingFragment StoreEntitySet="RolUsuario">
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaREG" ColumnName="FechaREG" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdRolUsuario" ColumnName="IdRolUsuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="Pro_Reportes" FunctionName="Libreria.Models.data.LibreriaDB.Store.Pro_Reportes">
+          <FunctionImportMapping FunctionImportName="PROAutenticar" FunctionName="LibreriaModel.Store.PROAutenticar">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Pro_Reportes_Result">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="NIT" ColumnName="NIT" />
-                <ScalarProperty Name="MontoComprado" ColumnName="MontoComprado" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Pro_Reportes_Caja" FunctionName="Libreria.Models.data.LibreriaDB.Store.Pro_Reportes_Caja">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Pro_Reportes_Caja_Result">
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
-                <ScalarProperty Name="CantidadVendida" ColumnName="CantidadVendida" />
-                <ScalarProperty Name="MontoVendido" ColumnName="MontoVendido" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Pro_Reportes_Clientes" FunctionName="Libreria.Models.data.LibreriaDB.Store.Pro_Reportes_Clientes">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Pro_Reportes_Clientes_Result">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="NIT" ColumnName="NIT" />
-                <ScalarProperty Name="MontoComprado" ColumnName="MontoComprado" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Pro_Reportes_Productos" FunctionName="Libreria.Models.data.LibreriaDB.Store.Pro_Reportes_Productos">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Pro_Reportes_Productos_Result">
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="CantidadVendida" ColumnName="CantidadVendida" />
-                <ScalarProperty Name="SaldoStock" ColumnName="SaldoStock" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Pro_Reportes_Promociones" FunctionName="Libreria.Models.data.LibreriaDB.Store.Pro_Reportes_Promociones">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Pro_Reportes_Promociones_Result">
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
-                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
-                <ScalarProperty Name="PrecioDescuento" ColumnName="PrecioDescuento" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Pro_Reportes_Proveedor" FunctionName="Libreria.Models.data.LibreriaDB.Store.Pro_Reportes_Proveedor">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Pro_Reportes_Proveedor_Result">
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="NIT" ColumnName="NIT" />
-                <ScalarProperty Name="Contacto" ColumnName="Contacto" />
-                <ScalarProperty Name="Telefonos" ColumnName="Telefonos" />
-                <ScalarProperty Name="CostoAdquisicion" ColumnName="CostoAdquisicion" />
-                <ScalarProperty Name="MontoTotalVendido" ColumnName="MontoTotalVendido" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Pro_Reportes_Reservas" FunctionName="Libreria.Models.data.LibreriaDB.Store.Pro_Reportes_Reservas">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Pro_Reportes_Reservas_Result">
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="NIT" ColumnName="NIT" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Producto" ColumnName="Producto" />
-                <ScalarProperty Name="CantidadReservada" ColumnName="CantidadReservada" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Pro_Reportes_Usuarios" FunctionName="Libreria.Models.data.LibreriaDB.Store.Pro_Reportes_Usuarios">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Pro_Reportes_Usuarios_Result">
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="Telefonos" ColumnName="Telefonos" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Rol" ColumnName="Rol" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PROActualizarStock" FunctionName="Libreria.Models.data.LibreriaDB.Store.PROActualizarStock" />
-          <FunctionImportMapping FunctionImportName="PROAutenticar" FunctionName="Libreria.Models.data.LibreriaDB.Store.PROAutenticar">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.PROAutenticar_Result">
+              <ComplexTypeMapping TypeName="LibreriaModel.PROAutenticar_Result">
                 <ScalarProperty Name="IdSujeto" ColumnName="IdSujeto" />
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
-                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PROListarProductos" FunctionName="Libreria.Models.data.LibreriaDB.Store.PROListarProductos">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.PROListarProductos_Result">
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+          <EntitySetMapping Name="Clasificacion">
+            <EntityTypeMapping TypeName="LibreriaModel.Clasificacion">
+              <MappingFragment StoreEntitySet="Clasificacion">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdClasificador" ColumnName="IdClasificador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sujeto">
+            <EntityTypeMapping TypeName="LibreriaModel.Sujeto">
+              <MappingFragment StoreEntitySet="Sujeto">
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefonos" ColumnName="Telefonos" />
+                <ScalarProperty Name="CI_NIT" ColumnName="CI_NIT" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="IdSujeto" ColumnName="IdSujeto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="LibreriaModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Pwd" ColumnName="Pwd" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="IdClasificacion" ColumnName="IdClasificacion" />
+                <ScalarProperty Name="IdSujeto" ColumnName="IdSujeto" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="LibreriaModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Foto" ColumnName="Foto" />
-                <ScalarProperty Name="CostoVenta" ColumnName="CostoVenta" />
-                <ScalarProperty Name="Cobrar" ColumnName="Cobrar" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PROListarPromociones" FunctionName="Libreria.Models.data.LibreriaDB.Store.PROListarPromociones">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROListarPromociones" FunctionName="LibreriaModel.Store.PROListarPromociones">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.PROListarPromociones_Result">
+              <ComplexTypeMapping TypeName="LibreriaModel.PROListarPromociones_Result">
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -1871,26 +1707,37 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PROListarUsuarios" FunctionName="Libreria.Models.data.LibreriaDB.Store.PROListarUsuarios">
+          <EntitySetMapping Name="Carrito">
+            <EntityTypeMapping TypeName="LibreriaModel.Carrito">
+              <MappingFragment StoreEntitySet="Carrito">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Transaccion" ColumnName="Transaccion" />
+                <ScalarProperty Name="FechaREG" ColumnName="FechaREG" />
+                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
+                <ScalarProperty Name="CostoUnidad" ColumnName="CostoUnidad" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+                <ScalarProperty Name="IdCarrito" ColumnName="IdCarrito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROListarProductos" FunctionName="LibreriaModel.Store.PROListarProductos">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.PROListarUsuarios_Result">
-                <ScalarProperty Name="IdSujeto" ColumnName="IdSujeto" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="CI_NIT" ColumnName="CI_NIT" />
-                <ScalarProperty Name="Telefonos" ColumnName="Telefonos" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
-                <ScalarProperty Name="Rol" ColumnName="Rol" />
+              <ComplexTypeMapping TypeName="LibreriaModel.PROListarProductos_Result">
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="CostoVenta" ColumnName="CostoVenta" />
+                <ScalarProperty Name="Cobrar" ColumnName="Cobrar" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PROObtenerNroFactura" FunctionName="Libreria.Models.data.LibreriaDB.Store.PROObtenerNroFactura" />
-          <FunctionImportMapping FunctionImportName="PROObtenerProductoStock" FunctionName="Libreria.Models.data.LibreriaDB.Store.PROObtenerProductoStock">
+          <FunctionImportMapping FunctionImportName="PROObtenerProductoStock" FunctionName="LibreriaModel.Store.PROObtenerProductoStock">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.PROObtenerProductoStock_Result">
+              <ComplexTypeMapping TypeName="LibreriaModel.PROObtenerProductoStock_Result">
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -1900,32 +1747,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Libreria.Models.data.LibreriaDB.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Libreria.Models.data.LibreriaDB.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Libreria.Models.data.LibreriaDB.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Libreria.Models.data.LibreriaDB.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Libreria.Models.data.LibreriaDB.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Libreria.Models.data.LibreriaDB.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Libreria.Models.data.LibreriaDB.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Libreria.Models.data.LibreriaDB.Store.sp_upgraddiagrams" />
           <EntitySetMapping Name="Pedido">
-            <EntityTypeMapping TypeName="Libreria.Models.data.LibreriaDB.Pedido">
+            <EntityTypeMapping TypeName="LibreriaModel.Pedido">
               <MappingFragment StoreEntitySet="Pedido">
                 <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
                 <ScalarProperty Name="Telefonos" ColumnName="Telefonos" />
@@ -1938,6 +1761,181 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Factura">
+            <EntityTypeMapping TypeName="LibreriaModel.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="FechaREG" ColumnName="FechaREG" />
+                <ScalarProperty Name="CodigoControl" ColumnName="CodigoControl" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROObtenerNroFactura" FunctionName="LibreriaModel.Store.PROObtenerNroFactura" />
+          <EntitySetMapping Name="Sucursal">
+            <EntityTypeMapping TypeName="LibreriaModel.Sucursal">
+              <MappingFragment StoreEntitySet="Sucursal">
+                <ScalarProperty Name="IdUsuarioRES" ColumnName="IdUsuarioRES" />
+                <ScalarProperty Name="LimiteEmision" ColumnName="LimiteEmision" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Llave" ColumnName="Llave" />
+                <ScalarProperty Name="NroAutorizacion" ColumnName="NroAutorizacion" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROListarUsuarios" FunctionName="LibreriaModel.Store.PROListarUsuarios">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LibreriaModel.PROListarUsuarios_Result">
+                <ScalarProperty Name="IdSujeto" ColumnName="IdSujeto" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="CI_NIT" ColumnName="CI_NIT" />
+                <ScalarProperty Name="Telefonos" ColumnName="Telefonos" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROActualizarStock" FunctionName="LibreriaModel.Store.PROActualizarStock" />
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="LibreriaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Pro_Reportes" FunctionName="LibreriaModel.Store.Pro_Reportes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LibreriaModel.Pro_Reportes_Result">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="MontoComprado" ColumnName="MontoComprado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Pro_Reportes_Caja" FunctionName="LibreriaModel.Store.Pro_Reportes_Caja">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LibreriaModel.Pro_Reportes_Caja_Result">
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+                <ScalarProperty Name="CantidadVendida" ColumnName="CantidadVendida" />
+                <ScalarProperty Name="MontoVendido" ColumnName="MontoVendido" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Pro_Reportes_Clientes" FunctionName="LibreriaModel.Store.Pro_Reportes_Clientes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LibreriaModel.Pro_Reportes_Clientes_Result">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="MontoComprado" ColumnName="MontoComprado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Pro_Reportes_Productos" FunctionName="LibreriaModel.Store.Pro_Reportes_Productos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LibreriaModel.Pro_Reportes_Productos_Result">
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="CantidadVendida" ColumnName="CantidadVendida" />
+                <ScalarProperty Name="SaldoStock" ColumnName="SaldoStock" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Pro_Reportes_Promociones" FunctionName="LibreriaModel.Store.Pro_Reportes_Promociones">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LibreriaModel.Pro_Reportes_Promociones_Result">
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="PrecioDescuento" ColumnName="PrecioDescuento" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Pro_Reportes_Proveedor" FunctionName="LibreriaModel.Store.Pro_Reportes_Proveedor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LibreriaModel.Pro_Reportes_Proveedor_Result">
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="Contacto" ColumnName="Contacto" />
+                <ScalarProperty Name="Telefonos" ColumnName="Telefonos" />
+                <ScalarProperty Name="CostoAdquisicion" ColumnName="CostoAdquisicion" />
+                <ScalarProperty Name="MontoTotalVendido" ColumnName="MontoTotalVendido" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Pro_Reportes_Reservas" FunctionName="LibreriaModel.Store.Pro_Reportes_Reservas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LibreriaModel.Pro_Reportes_Reservas_Result">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Producto" ColumnName="Producto" />
+                <ScalarProperty Name="CantidadReservada" ColumnName="CantidadReservada" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Pro_Reportes_Usuarios" FunctionName="LibreriaModel.Store.Pro_Reportes_Usuarios">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LibreriaModel.Pro_Reportes_Usuarios_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Telefonos" ColumnName="Telefonos" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="LibreriaModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="LibreriaModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="LibreriaModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="LibreriaModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LibreriaModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="LibreriaModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LibreriaModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="LibreriaModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="LibreriaModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

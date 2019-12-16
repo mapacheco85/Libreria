@@ -1,11 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Libreria.Models;
 using Libreria.Models.data;
-using System.Text;
 
 namespace Libreria.Controllers
 {
@@ -13,7 +16,7 @@ namespace Libreria.Controllers
     {
         public ActionResult Index()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var Promos = DB.PROListarPromociones().ToList();
 
@@ -38,7 +41,7 @@ namespace Libreria.Controllers
 
         public ActionResult Promos()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var Promos = DB.PROListarPromociones().ToList();
 
@@ -50,12 +53,12 @@ namespace Libreria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(CorreoModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 using (MailMessage mm = new MailMessage())
                 {
-                    string to = "miguelangelpachecoarteaga@gmail.com";
-                    string clave = "23212";
+                    string to = "libreriaelf@gmail.com";
+                    string clave = "Dencrx123";
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("Nombre: " + model.Nombre);
                     sb.AppendLine("Correo: " + model.Email);
@@ -81,8 +84,10 @@ namespace Libreria.Controllers
                         return RedirectToAction("Contact");
                     }
                 }
+
             }
             return View();
         }
     }
+
 }

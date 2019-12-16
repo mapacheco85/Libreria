@@ -25,7 +25,7 @@ namespace Libreria.Seguridad
     {
       //Se tiene que procesar la sucursal de otra forma.
       //Coneccion con la base de datos.
-      using (var DB = new ModLibreriaDB())
+      using (var DB = new LibreriaDB())
       {
         return DB.PROAutenticar(username, password, 1).Any();
       }
@@ -35,7 +35,7 @@ namespace Libreria.Seguridad
     public override MembershipUser GetUser(string username, bool userIsOnline)
     {
       //Conneccion con la base de datos.
-      using (var DB = new ModLibreriaDB())
+      using (var DB = new LibreriaDB())
       {
         var user = DB.Usuario.FirstOrDefault(P => P.Login == username);
 

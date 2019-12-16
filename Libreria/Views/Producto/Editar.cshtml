@@ -1,41 +1,60 @@
 ﻿@model Libreria.Models.data.Producto
 
 <div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h4 class="modal-title">Editar Producto</h4>
-    </div>
-    <div class="modal-body">
-      <form class="form-horizontal" action="/Libreria/Producto/Editar/@Model.IdProducto" method="post">
-        <!--Categoria-->
-        <div class="form-group">
-          <label for="txtNombre" class="col-sm-3 control-label">Categoria:</label>
-          <div class="col-sm-9">
-            @Html.DropDownList("IdCategoria",ViewData["Categorias"] as List<SelectListItem> , new { @class = "form-control" })
-          </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Editar Producto</h4>
         </div>
-        <!--Nombre-->
-        <div class="form-group">
-          <label for="txtNombre" class="col-sm-3 control-label">Nombre:</label>
-          <div class="col-sm-9">
-            <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre" required value="@Model.Nombre"/>
-          </div>
-        </div>
-        <!--Descripcion-->
-        <div class="form-group">
-          <label for="txtDescripcion" class="col-sm-3 control-label">Descripción:</label>
-          <div class="col-sm-9">
-            <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" placeholder="Descripción" value="@Model.Descripcion" />
-          </div>
+        <div class="modal-body">
+            @using (Html.BeginForm("Editar", "Producto", Model.IdProducto, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @*<form class="form-horizontal" action="/Libreria/Producto/Editar/@" method="post">*@
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true);
+            <!--Categoria-->
+                <div class="form-group">
+                    <label for="txtNombre" class="col-sm-3 control-label">Categoria:</label>
+                    <div class="col-sm-9">
+                        @Html.DropDownList("IdCategoria", ViewData["Categorias"] as List<SelectListItem>, new { @class = "form-control" })
+                    </div>
+                </div>
+            <!--Codigo-->
+                <div class="form-group">
+                    <label for="txtCodigo" class="col-sm-3 control-label">Código:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Codigo" required value="@Model.Codigo" />
+                    </div>
+                </div>
+            <!--Nombre-->
+                <div class="form-group">
+                    <label for="txtNombre" class="col-sm-3 control-label">Nombre:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre" required value="@Model.Nombre" />
+                    </div>
+                </div>
+            <!--Descripcion-->
+                <div class="form-group">
+                    <label for="txtDescripcion" class="col-sm-3 control-label">Descripción:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" placeholder="Descripción" value="@Model.Descripcion" />
+                    </div>
+                </div>
+            <!--Foto-->
+                <div class="form-group">
+                    <label for="txtFoto" class="col-sm-3 control-label">Foto:</label>
+                    <div class="col-sm-9">
+                        <input type="file" id="txtFoto" name="txtFoto" class="form-control" placeholder="Foto" value="@Model.Foto" />
+                    </div>
+                </div>
+                <span style="color:green">@ViewBag.Message</span>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+                @*</form>*@
+            }
         </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-      </form>
     </div>
-
-  </div>
 </div>

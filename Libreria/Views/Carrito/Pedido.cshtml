@@ -1,6 +1,7 @@
-﻿@{
-    ViewBag.Title = "Pedido";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿
+@{
+  ViewBag.Title = "Pedido";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model List<Libreria.Models.data.Carrito>
 <h2>Pedido</h2>
@@ -84,8 +85,11 @@
         </p>
     </div>
 
+
     <div class="modal-footer">
         @*<button type="submit" class="btn btn-primary">Cancelar Pedido</button>*@
         <button type="submit" class="btn btn-primary">Registrar Pedido</button>
+
     </div>
+
 </form>

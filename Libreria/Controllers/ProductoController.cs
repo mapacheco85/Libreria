@@ -13,11 +13,10 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 DB.Configuration.LazyLoadingEnabled = false;
                 var Pro = DB.Producto.Include("Categoria").OrderBy(P => P.Nombre);
-
                 return View(Pro.ToList());
             }
         }
@@ -25,7 +24,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Agregar()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var Cat = DB.Categoria.OrderBy(P => P.Nombre).ToList();
                 return PartialView(Cat);
@@ -35,7 +34,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Editar(short id)
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var Pro = DB.Producto.SingleOrDefault(P => P.IdProducto == id);
 
@@ -50,7 +49,6 @@ namespace Libreria.Controllers
                         Selected = Item.IdCategoria == Pro.IdCategoria ? true : false
                     });
                 }
-
                 ViewData["Categorias"] = Categorias;
                 return PartialView(Pro);
             }
@@ -60,20 +58,29 @@ namespace Libreria.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Agregar(FormCollection Col)
+        public ActionResult Agregar(FormCollection Col, HttpPostedFileBase txtFoto)
         {
             if (Col.Count > 0)
             {
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
                     Producto Pro = new Producto();
                     Pro.IdCategoria = short.Parse(Col["IdCategoria"]);
                     Pro.Nombre = Col["txtNombre"];
                     Pro.Descripcion = Col["txtDescripcion"];
+                    Pro.Codigo = Col["txtCodigo"];
                     Pro.Activo = true;
+                    if (txtFoto != null)
+                    {
+                        //cargar fotos
+                        string ruta = Server.MapPath("~/Content/productimg/");
+                        txtFoto.SaveAs(ruta + System.IO.Path.GetFileName(txtFoto.FileName));
+                        Pro.Foto = "~/Content/productimg/" + System.IO.Path.GetFileName(txtFoto.FileName);
+                    }
+                    else
+                        Pro.Foto = null;
                     DB.Producto.Add(Pro);
                     DB.SaveChanges();
-
                     var Pros = DB.Producto.Include("Categoria").OrderBy(P => P.Nombre);
                     return Redirect("/Libreria/producto/");
                 }
@@ -86,16 +93,28 @@ namespace Libreria.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Editar(short id, FormCollection Col)
+        public ActionResult Editar(short id, FormCollection Col, HttpPostedFileBase txtFoto)
         {
             if (Col.Count > 0)
             {
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
                     Producto Pro = DB.Producto.SingleOrDefault(P => P.IdProducto == id);
                     Pro.IdCategoria = short.Parse(Col["IdCategoria"]);
                     Pro.Nombre = Col["txtNombre"];
                     Pro.Descripcion = Col["txtDescripcion"];
+                    Pro.Codigo = Col["txtCodigo"];
+
+                    if (txtFoto != null)
+                    {
+                        //cargar fotos
+                        string ruta = Server.MapPath("~/Content/productimg/");
+                        txtFoto.SaveAs(ruta + System.IO.Path.GetFileName(txtFoto.FileName));
+                        Pro.Foto = "~/Content/productimg/" + System.IO.Path.GetFileName(txtFoto.FileName);
+                        ViewBag.Message = "Archivo subido exitosamente.";
+                    }
+                    else
+                        Pro.Foto = null;
                     DB.SaveChanges();
 
                     var Pros = DB.Producto.Include("Categoria").OrderBy(P => P.Nombre);
@@ -114,16 +133,12 @@ namespace Libreria.Controllers
         [HttpPost]
         public ActionResult Eliminar(short id)
         {
-
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 Producto Pro = DB.Producto.SingleOrDefault(P => P.IdProducto == id);
                 DB.Producto.Remove(Pro);
-
                 DB.SaveChanges();
-
                 var Prods = DB.Producto.OrderBy(P => P.Nombre).ToList();
-
                 return Redirect("/Libreria/producto/");
             }
         }

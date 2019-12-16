@@ -15,10 +15,10 @@ namespace Libreria.Models.data
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class ModLibreriaDB : DbContext
+    public partial class LibreriaDB : DbContext
     {
-        public ModLibreriaDB()
-            : base("name=ModLibreriaDB")
+        public LibreriaDB()
+            : base("name=LibreriaDB")
         {
         }
     
@@ -27,27 +27,90 @@ namespace Libreria.Models.data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Carrito> Carrito { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
-        public virtual DbSet<Clasificacion> Clasificacion { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Descuento> Descuento { get; set; }
         public virtual DbSet<Detalle> Detalle { get; set; }
         public virtual DbSet<DetReserva> DetReserva { get; set; }
         public virtual DbSet<Empresa> Empresa { get; set; }
-        public virtual DbSet<Factura> Factura { get; set; }
         public virtual DbSet<Nivel> Nivel { get; set; }
-        public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }
         public virtual DbSet<Reserva> Reserva { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
-        public virtual DbSet<RolUsuario> RolUsuario { get; set; }
         public virtual DbSet<Stock> Stock { get; set; }
-        public virtual DbSet<Sucursal> Sucursal { get; set; }
+        public virtual DbSet<RolUsuario> RolUsuario { get; set; }
+        public virtual DbSet<Clasificacion> Clasificacion { get; set; }
         public virtual DbSet<Sujeto> Sujeto { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Producto> Producto { get; set; }
+        public virtual DbSet<Carrito> Carrito { get; set; }
         public virtual DbSet<Pedido> Pedido { get; set; }
+        public virtual DbSet<Factura> Factura { get; set; }
+        public virtual DbSet<Sucursal> Sucursal { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+    
+        public virtual ObjectResult<PROAutenticar_Result> PROAutenticar(string login, string pwd, Nullable<short> idSucursal)
+        {
+            var loginParameter = login != null ?
+                new ObjectParameter("Login", login) :
+                new ObjectParameter("Login", typeof(string));
+    
+            var pwdParameter = pwd != null ?
+                new ObjectParameter("Pwd", pwd) :
+                new ObjectParameter("Pwd", typeof(string));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROAutenticar_Result>("PROAutenticar", loginParameter, pwdParameter, idSucursalParameter);
+        }
+    
+        public virtual ObjectResult<PROListarPromociones_Result> PROListarPromociones()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROListarPromociones_Result>("PROListarPromociones");
+        }
+    
+        public virtual ObjectResult<PROListarProductos_Result> PROListarProductos()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROListarProductos_Result>("PROListarProductos");
+        }
+    
+        public virtual ObjectResult<PROObtenerProductoStock_Result> PROObtenerProductoStock(Nullable<short> idProducto)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROObtenerProductoStock_Result>("PROObtenerProductoStock", idProductoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> PROObtenerNroFactura(string nroAutorizacion)
+        {
+            var nroAutorizacionParameter = nroAutorizacion != null ?
+                new ObjectParameter("NroAutorizacion", nroAutorizacion) :
+                new ObjectParameter("NroAutorizacion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("PROObtenerNroFactura", nroAutorizacionParameter);
+        }
+    
+        public virtual ObjectResult<PROListarUsuarios_Result> PROListarUsuarios()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROListarUsuarios_Result>("PROListarUsuarios");
+        }
+    
+        public virtual int PROActualizarStock(Nullable<int> producto, Nullable<int> cantidad)
+        {
+            var productoParameter = producto.HasValue ?
+                new ObjectParameter("producto", producto) :
+                new ObjectParameter("producto", typeof(int));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("cantidad", cantidad) :
+                new ObjectParameter("cantidad", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROActualizarStock", productoParameter, cantidadParameter);
+        }
     
         public virtual ObjectResult<Pro_Reportes_Result> Pro_Reportes(Nullable<System.DateTime> fecha1, Nullable<System.DateTime> fecha2, string tipoReportes)
         {
@@ -183,69 +246,6 @@ namespace Libreria.Models.data
                 new ObjectParameter("TipoReportes", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pro_Reportes_Usuarios_Result>("Pro_Reportes_Usuarios", fecha1Parameter, fecha2Parameter, tipoReportesParameter);
-        }
-    
-        public virtual int PROActualizarStock(Nullable<int> producto, Nullable<int> cantidad)
-        {
-            var productoParameter = producto.HasValue ?
-                new ObjectParameter("producto", producto) :
-                new ObjectParameter("producto", typeof(int));
-    
-            var cantidadParameter = cantidad.HasValue ?
-                new ObjectParameter("cantidad", cantidad) :
-                new ObjectParameter("cantidad", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROActualizarStock", productoParameter, cantidadParameter);
-        }
-    
-        public virtual ObjectResult<PROAutenticar_Result> PROAutenticar(string login, string pwd, Nullable<short> idSucursal)
-        {
-            var loginParameter = login != null ?
-                new ObjectParameter("Login", login) :
-                new ObjectParameter("Login", typeof(string));
-    
-            var pwdParameter = pwd != null ?
-                new ObjectParameter("Pwd", pwd) :
-                new ObjectParameter("Pwd", typeof(string));
-    
-            var idSucursalParameter = idSucursal.HasValue ?
-                new ObjectParameter("IdSucursal", idSucursal) :
-                new ObjectParameter("IdSucursal", typeof(short));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROAutenticar_Result>("PROAutenticar", loginParameter, pwdParameter, idSucursalParameter);
-        }
-    
-        public virtual ObjectResult<PROListarProductos_Result> PROListarProductos()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROListarProductos_Result>("PROListarProductos");
-        }
-    
-        public virtual ObjectResult<PROListarPromociones_Result> PROListarPromociones()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROListarPromociones_Result>("PROListarPromociones");
-        }
-    
-        public virtual ObjectResult<PROListarUsuarios_Result> PROListarUsuarios()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROListarUsuarios_Result>("PROListarUsuarios");
-        }
-    
-        public virtual ObjectResult<Nullable<int>> PROObtenerNroFactura(string nroAutorizacion)
-        {
-            var nroAutorizacionParameter = nroAutorizacion != null ?
-                new ObjectParameter("NroAutorizacion", nroAutorizacion) :
-                new ObjectParameter("NroAutorizacion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("PROObtenerNroFactura", nroAutorizacionParameter);
-        }
-    
-        public virtual ObjectResult<PROObtenerProductoStock_Result> PROObtenerProductoStock(Nullable<short> idProducto)
-        {
-            var idProductoParameter = idProducto.HasValue ?
-                new ObjectParameter("IdProducto", idProducto) :
-                new ObjectParameter("IdProducto", typeof(short));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROObtenerProductoStock_Result>("PROObtenerProductoStock", idProductoParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

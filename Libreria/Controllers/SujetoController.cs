@@ -15,7 +15,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Index()
         {//Se obtienen los datos para pasarlos a la vista.
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var Per = DB.PROListarUsuarios().ToList();
                 return View(Per);
@@ -26,7 +26,7 @@ namespace Libreria.Controllers
         //Vista Pacial -- PartialView
         public ActionResult Editar(short id)
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var Rols = DB.Rol.OrderBy(P => P.Nombre).ToList();
                 var Per = DB.Sujeto.SingleOrDefault(P => P.IdSujeto == id);
@@ -54,7 +54,7 @@ namespace Libreria.Controllers
         //Vista Parcial -- PartialView
         public ActionResult Agregar()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
 
                 var Rols = DB.Rol.OrderBy(P => P.Nombre).ToList();
@@ -82,7 +82,7 @@ namespace Libreria.Controllers
         {
             if (Col.Count > 0)
             {
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
                     var Su = DB.Sujeto.SingleOrDefault(P => P.IdSujeto == id);
                     Su.Nombres = Col["txtNombres"];
@@ -126,7 +126,7 @@ namespace Libreria.Controllers
             {
                 //Validaciones de la data.
                 //Registro en la base de datos.
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
                     Sujeto Su = new Sujeto();
                     Su.Nombres = Col["txtNombres"];
@@ -171,7 +171,7 @@ namespace Libreria.Controllers
         public ActionResult Eliminar(short id)
         {
 
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 Usuario u = DB.Usuario.SingleOrDefault(U => U.IdSujeto == id);
 

@@ -3,24 +3,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model List<Libreria.Models.data.Carrito>
+
 <h2>Ventas</h2>
 
 <form class="form-inline" action="/Libreria/Factura/Agregar" method="post">
     <!--Productos-->
     <div class="form-group">
-        <input class="form-control" id="Codigo" 
-               placeholder="Escriba un codigo" name="Codigo" required />
+        <input class="form-control" id="Codigo" placeholder="Escriba un codigo" name="Codigo" required />
     </div>
     <!--Productos-->
     @*<div class="form-group">
-        <input class="form-control" id="IdProducto" 
-               placeholder="Elija un producto" name="IdProducto" required />
-    </div>*@
+            <input class="form-control" id="IdProducto" placeholder="Elija un producto" name="IdProducto" required />
+        </div>*@
     <!--Cantidad-->
     <div class="form-group">
         <label for="txtCantidad">Cantidad:</label>
-        <input type="number" id="txtCantidad" name="txtCantidad" 
-               class="form-control" min="1" placeholder="Cantidad" required />
+        <input type="number" id="txtCantidad" name="txtCantidad" class="form-control" min="1" placeholder="Cantidad" required />
     </div>
 
     <button type="submit" class="btn btn-primary">Agregar</button>
@@ -52,25 +50,20 @@
                     <th scope="row">@item.IdCarrito</th>
                     <th>@item.Producto.Nombre</th>
                     <th>@item.Producto.Descripcion</th>
-                    <th style="text-align:center;">
-                        @item.Cantidad
-                    </th>
-                    <th style="text-align:right;">
-                        @String.Format("{0:f}", item.CostoUnidad)
-                    </th>
-                    <th style="text-align:right;">
-                        @String.Format("{0:f}", item.CostoTotal)
-                    </th>
+                    <th style="text-align:center;">@item.Cantidad</th>
+                    <th style="text-align:right;">@String.Format("{0:f}", item.CostoUnidad)</th>
+                    <th style="text-align:right;">@String.Format("{0:f}", item.CostoTotal)</th>
                     <th>
-                        <button type="button" class="btn btn-danger" 
-                                onclick="jsEliminar(@item.IdCarrito)">Eliminar</button>
+                        <button type="button" class="btn btn-danger" onclick="jsEliminar(@item.IdCarrito)">Eliminar</button>
                     </th>
                 </tr>
             }
+            <p style="color: red;">@ViewBag.ErrorMessage</p>
         }
         catch
         {
-            <script type="text/javascript"> alert('No tiene el stock suficiente para este producto!!');</script>
+            @*<p style="color: red;">@ViewBag.ErrorMessage</p>*@
+
         }
     </tbody>
 </table>
@@ -78,8 +71,7 @@
     <p class="text-right"><strong>Total: @ViewData["Totales"]</strong></p>
 </div>
 <div class="pull-right">
-    <button class="btn btn-default cancelar" 
-            type="button" onclick="javascript: Cancelar1();">Cancelar</button>
+    <button class="btn btn-default cancelar" type="button" onclick="javascript: Cancelar1();">Cancelar</button>
     @Html.ActionLink("Vender", "Facturar", "Factura", new { @class = "btn btn-default" })
     <br />
     <br />
@@ -121,7 +113,7 @@
             }
         }
 
-        @*$("#IdProducto").autocomplete({
+        $("#IdProducto").autocomplete({
             source: function (request, response) {
                 $.ajax({
                     url: '@Url.Action("GetSearchValue","Factura")',
@@ -137,7 +129,7 @@
                     }
                 });
             }
-        });*@
+        });
 
         $("#Codigo").autocomplete({
             source: function (request, response) {

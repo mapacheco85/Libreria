@@ -26,9 +26,9 @@ namespace Libreria.Models.data
         public System.DateTime FechaREG { get; set; }
         public bool Activo { get; set; }
     
-        public virtual Producto Producto { get; set; }
         public virtual Proveedor Proveedor { get; set; }
-        public virtual Sucursal Sucursal { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual Producto Producto { get; set; }
+        public virtual Sucursal Sucursal { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Libreria.Models.data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Detalle> Detalle { get; set; }
-        public virtual Sucursal Sucursal { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual Sucursal Sucursal { get; set; }
     }
 }

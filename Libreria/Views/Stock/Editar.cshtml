@@ -33,14 +33,14 @@
         <div class="form-group" lang="es-us">
           <label for="txtPrecio" class="col-sm-3 control-label">Precio Unitario:</label>
           <div class="col-sm-9">
-            <input type="number" id="txtPrecio" name="txtPrecio" min="1" step="any" class="form-control" placeholder="0.00" value="@Model.PrecioUnitario" />
+            <input type="number" lang="es-bo" id="txtPrecio" name="txtPrecio" min="1" class="form-control" placeholder="@Model.PrecioUnitario.ToString("0.00")" value="@Model.PrecioUnitario.ToString("0.00")" />
           </div>
         </div>
         <!--CostoVenta-->
         <div class="form-group" lang="es-us">
           <label for="txtCosto" class="col-sm-3 control-label">Costo Venta:</label>
           <div class="col-sm-9">
-            <input type="number" id="txtCosto" name="txtCosto" min="1" step="any" class="form-control" placeholder="0.00" value="@Model.CostoVenta" />
+            <input type="number" id="txtCosto" name="txtCosto" min="1" class="form-control" placeholder="@Model.CostoVenta.ToString("0.00")" value="@Model.CostoVenta.ToString("0.00")" />
           </div>
         </div>
         <!--FechaVencimiento-->

@@ -11,17 +11,18 @@ namespace Libreria.Models.data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web;
+
     public partial class Producto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Producto()
         {
-            this.Carrito = new HashSet<Carrito>();
             this.Descuento = new HashSet<Descuento>();
             this.Detalle = new HashSet<Detalle>();
             this.DetReserva = new HashSet<DetReserva>();
             this.Stock = new HashSet<Stock>();
+            this.Carrito = new HashSet<Carrito>();
         }
     
         public short IdProducto { get; set; }
@@ -31,9 +32,9 @@ namespace Libreria.Models.data
         public string Foto { get; set; }
         public bool Activo { get; set; }
         public string Codigo { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Carrito> Carrito { get; set; }
+
+        public HttpPostedFileBase txtFoto { get; set; }
+
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Descuento> Descuento { get; set; }
@@ -43,5 +44,7 @@ namespace Libreria.Models.data
         public virtual ICollection<DetReserva> DetReserva { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Stock> Stock { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Carrito> Carrito { get; set; }
     }
 }

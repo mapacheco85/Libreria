@@ -14,14 +14,13 @@ namespace Libreria.Models.data
     public partial class PROListarUsuarios_Result
     {
         public int IdSujeto { get; set; }
-        public Nullable<long> Numero { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public string CI_NIT { get; set; }
         public string Telefonos { get; set; }
         public string Direccion { get; set; }
         public string Email { get; set; }
-        public string LOGIN { get; set; }
+        public string Login { get; set; }
         public string Rol { get; set; }
     }
 }

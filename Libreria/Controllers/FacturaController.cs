@@ -14,7 +14,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 DB.Configuration.LazyLoadingEnabled = false;
                 var Car = DB.Carrito.Include("Producto").Where(P => P.SessionID == Session.SessionID & P.Transaccion == true & P.Activo == true).ToList();
@@ -44,21 +44,21 @@ namespace Libreria.Controllers
 
         public JsonResult GetSearchValue(string search)
         {
-            var DB = new ModLibreriaDB();
-            var allsearch = DB.Producto.Where(p => p.Nombre.Contains(search)).Select(p => new { p.IdProducto, p.Nombre }).ToList();
+            var DB = new LibreriaDB();
+            var allsearch = DB.Producto.Where(p => p.Nombre.Contains(search) ).Select(p => new { p.IdProducto, p.Codigo }).ToList();
             return new JsonResult { Data = allsearch, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public JsonResult GetSearchValueCode(string search)
         {
-            var DB = new ModLibreriaDB();
-            var allsearch = DB.Producto.Where(p => p.Codigo.Contains(search)).Select(p => new { p.IdProducto, p.Codigo, p.Nombre }).ToList();
+            var DB = new LibreriaDB();
+            var allsearch = DB.Producto.Where(p => p.Codigo.Contains(search) || p.Nombre.Contains(search)).Select(p => new { p.IdProducto, p.Codigo, p.Nombre }).ToList();
             return new JsonResult { Data = allsearch, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public JsonResult GetProductCode(int id)
         {
-            var DB = new ModLibreriaDB();
+            var DB = new LibreriaDB();
             var allsearch = DB.Producto.Where(p => p.Codigo.Equals(id)).Select(p => new { p.IdProducto, p.Nombre }).ToList();
             return new JsonResult { Data = allsearch, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -66,11 +66,12 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Facturar()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 DB.Configuration.LazyLoadingEnabled = false;
                 var Car = DB.Carrito.Include("Producto").Where(P => P.SessionID == Session.SessionID & P.Transaccion == true & P.Activo == true).ToList();
                 ViewData["Totales"] = Car.Sum(P => P.CostoTotal).ToString("#,#0.00");
+
                 return View(Car);
             }
         }
@@ -83,25 +84,24 @@ namespace Libreria.Controllers
         {
             if (Col.Count > 0)
             {
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
-                    string codigo = Col["Codigo"];
-                    string[] lista = codigo.Split('-');
+                    string data = Col["Codigo"];
+                    string[] lista = data.Split('-');
                     var Pros = DB.PROListarProductos().SingleOrDefault(P => P.Codigo.Equals(lista[0]));
                     bool res = DB.Database.SqlQuery<bool>(String.Format(@"select dbo.fnControlStock({0},{1})", Pros.IdProducto, int.Parse(Col["txtCantidad"]))).FirstOrDefault<bool>();
-
                     if (res == true)
                     {
-                        int cant = DB.Carrito.Where(c => c.IdProducto == Pros.IdProducto && c.Transaccion == true && c.Activo == true).Count();
-                        if (cant == 0)
+                        decimal precio = DB.Database.SqlQuery<decimal>(String.Format(@"select dbo.fnDescuento({0})", Pros.IdProducto)).FirstOrDefault<decimal>();
+                        int total = DB.Carrito.Where(P => P.IdProducto == Pros.IdProducto & P.Transaccion == true & P.Activo == true).Count();
+
+                        if (total == 0)
                         {
                             Carrito Car = new Carrito();
                             Car.SessionID = Session.SessionID;
                             Car.IdProducto = Pros.IdProducto;
                             Car.Cantidad = short.Parse(Col["txtCantidad"]);
-                            decimal precio = DB.Database.SqlQuery<decimal>(String.Format(@"select dbo.fnDescuento({0})", Pros.IdProducto)).FirstOrDefault<decimal>();
-
-                            Car.CostoUnidad = precio; 
+                            Car.CostoUnidad = precio; //Pros.CostoVenta;
                             Car.CostoTotal = (Car.Cantidad * Car.CostoUnidad);
                             Car.FechaREG = DateTime.Now;
                             Car.Transaccion = true;
@@ -111,10 +111,10 @@ namespace Libreria.Controllers
                         }
                         else
                         {
-                            Carrito car = DB.Carrito.SingleOrDefault(P => P.IdProducto == Pros.IdProducto & P.Transaccion == true & P.Activo == true);
-                            short cantNueva = short.Parse(Col["txtCantidad"]);
-                            car.Cantidad = (short)(car.Cantidad + cantNueva);
-                            car.CostoTotal = (car.Cantidad * car.CostoUnidad);
+                            Carrito Car = DB.Carrito.First(P => P.IdProducto == Pros.IdProducto & P.Transaccion == true & P.Activo == true);
+                            Car.Cantidad = (short) (Car.Cantidad  + short.Parse(Col["txtCantidad"]));
+                            Car.CostoTotal = (Car.Cantidad * Car.CostoUnidad);
+                            Car.FechaREG = DateTime.Now;
                             DB.SaveChanges();
                         }
 
@@ -138,7 +138,6 @@ namespace Libreria.Controllers
                                 Selected = false
                             });
                         }
-
                         ViewData["Productos"] = Productos;
                         ViewData["Totales"] = Cars.Sum(P => P.CostoTotal).ToString("#,#0.00");
 
@@ -146,8 +145,31 @@ namespace Libreria.Controllers
                     }
                     else
                     {
-                        ViewBag.Error = "No hay el stock requerido!!!";
-                        return View("Index");
+                        ViewBag.ErrorMessage = "No hay el stock requerido!!!";
+                        //Se Cargan los datos para la vista.
+                        DB.Configuration.LazyLoadingEnabled = false;
+                        var Cars = DB.Carrito.Include("Producto").Where(P => P.SessionID == Session.SessionID & P.Transaccion == true & P.Activo == true).ToList();
+
+                        List<SelectListItem> Productos = new List<SelectListItem>();
+                        Productos.Add(new SelectListItem()
+                        {
+                            Value = "0",
+                            Text = "Seleccione un producto",
+                            Selected = true
+                        });
+                        foreach (var Item in DB.PROListarProductos().ToList())
+                        {
+                            Productos.Add(new SelectListItem()
+                            {
+                                Value = Item.IdProducto.ToString(),
+                                Text = Item.Nombre,
+                                Selected = false
+                            });
+                        }
+                        ViewData["Productos"] = Productos;
+                        ViewData["Totales"] = Cars.Sum(P => P.CostoTotal).ToString("#,#0.00");
+
+                        return View("Index", Cars);
                     }
                 }
             }
@@ -161,7 +183,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Eliminar(decimal id)
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var Car = DB.Carrito.SingleOrDefault(P => P.IdCarrito == id);
                 DB.Carrito.Remove(Car);
@@ -174,7 +196,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Cancelar()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var lista = (from cc in DB.Carrito where cc.Activo == true select cc);
                 foreach (Carrito carrito in lista.ToList())
@@ -193,7 +215,7 @@ namespace Libreria.Controllers
         {
             if (Col.Count > 0)
             {
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
                     var Usu = DB.Usuario.SingleOrDefault(P => P.Login == User.Identity.Name);
                     var Suc = DB.Sucursal.SingleOrDefault(P => P.IdSucursal == 1);

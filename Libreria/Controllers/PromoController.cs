@@ -13,7 +13,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 DB.Configuration.LazyLoadingEnabled = false;
                 var Des = DB.Descuento.Include("Producto").OrderByDescending(P => P.FechaFin).ToList();
@@ -24,7 +24,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Agregar()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 List<SelectListItem> Productos = new List<SelectListItem>();
                 Productos.Add(new SelectListItem()
@@ -53,7 +53,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Editar(short id)
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var Des = DB.Descuento.SingleOrDefault(P => P.IdDescuento == id);
                 List<SelectListItem> Productos = new List<SelectListItem>();
@@ -78,11 +78,11 @@ namespace Libreria.Controllers
         {
             if (Col.Count > 0)
             {
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
                     Descuento Des = new Descuento();
                     Des.IdProducto = short.Parse(Col["IdProducto"]);
-                    Des.Porcentaje = decimal.Parse(Col["txtPorcentaje"]) / 10;
+                    Des.Porcentaje = decimal.Parse(Col["txtPorcentaje"]);
                     Des.FechaIni = DateTime.Parse(Col["txtIni"]);
                     Des.FechaFin = DateTime.Parse(Col["txtFin"]);
                     Des.Activo = true;
@@ -108,11 +108,11 @@ namespace Libreria.Controllers
         {
             if (Col.Count > 0)
             {
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
                     Descuento Des = DB.Descuento.SingleOrDefault(P => P.IdDescuento == id);
                     Des.IdProducto = short.Parse(Col["IdProducto"]);
-                    Des.Porcentaje = decimal.Parse(Col["txtPorcentaje"]) / 10;
+                    Des.Porcentaje = decimal.Parse(Col["txtPorcentaje"]);
                     Des.FechaIni = DateTime.Parse(Col["txtIni"]);
                     Des.FechaFin = DateTime.Parse(Col["txtFin"]);
                     DB.SaveChanges();
@@ -134,7 +134,7 @@ namespace Libreria.Controllers
         public ActionResult Eliminar(short id)
         {
 
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 Descuento obj = DB.Descuento.SingleOrDefault(U => U.IdDescuento == id);
                 DB.Descuento.Remove(obj);

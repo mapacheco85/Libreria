@@ -20,7 +20,7 @@ namespace Libreria.Models.data
         public short Cantidad { get; set; }
         public decimal Monto { get; set; }
     
-        public virtual Factura Factura { get; set; }
         public virtual Producto Producto { get; set; }
+        public virtual Factura Factura { get; set; }
     }
 }

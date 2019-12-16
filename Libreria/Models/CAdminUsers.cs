@@ -10,7 +10,7 @@ namespace Libreria.Models
     {
         public short ObtenerRol(string Name)
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var Us = DB.Usuario.Include("RolUsuario").SingleOrDefault(P => P.Login == Name);
                 if (Us != null)

@@ -14,7 +14,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var Pro = DB.Proveedor.OrderBy(P => P.Nombre).ToList();
                 return View(Pro);
@@ -33,7 +33,7 @@ namespace Libreria.Controllers
         [Authorize]
         public ActionResult Editar(short id)
         {
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 var Pro = DB.Proveedor.SingleOrDefault(P => P.IdProveedor == id);
 
@@ -56,7 +56,7 @@ namespace Libreria.Controllers
                 Pro.Contacto = Col["txtContacto"];
                 Pro.Activo = true;
 
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
                     DB.Proveedor.Add(Pro);
                     DB.SaveChanges();
@@ -79,7 +79,7 @@ namespace Libreria.Controllers
         {
             if (Col.Count > 0)
             {
-                using (var DB = new ModLibreriaDB())
+                using (var DB = new LibreriaDB())
                 {
                     var Pro = DB.Proveedor.SingleOrDefault(P => P.IdProveedor == id);
                     Pro.Nombre = Col["txtNombre"];
@@ -103,7 +103,7 @@ namespace Libreria.Controllers
         public ActionResult Eliminar(short id)
         {
 
-            using (var DB = new ModLibreriaDB())
+            using (var DB = new LibreriaDB())
             {
                 Proveedor Pro = DB.Proveedor.SingleOrDefault(P => P.IdProveedor == id);
                 DB.Proveedor.Remove(Pro);

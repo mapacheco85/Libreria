@@ -51,8 +51,8 @@
     </div>
     <div class="pull-right">
 
-        <button class="btn btn-default" type="submit">Imprimir</button>
-        <button class="btn btn-default finalizar" type="button">Finalizar</button>
+        <button class="btn btn-default" type="submit">Vender</button>
+        <button class="btn btn-default finalizar" type="button">Volver</button>
     </div>
     <p></p>
     </br> </br>
@@ -60,7 +60,7 @@
     @section Scripts{
         <script type="text/javascript">
         $('.finalizar').click(function () {
-            if (confirm("Desea finalizar la venta?"))
+            if (confirm("Desea volver a la lista de productos?"))
                 document.location.href = "@Url.Content("/Libreria/factura/")";
         });
         </script>

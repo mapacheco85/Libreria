@@ -19,7 +19,7 @@
         <div class="form-group" lang="en-us">
           <label for="txtPorcentaje" class="col-sm-3 control-label">Porcentaje:</label>
           <div class="col-sm-9">
-            <input type="number" id="txtPorcentaje" min="1" name="txtPorcentaje" step="any" class="form-control" placeholder="0" value="@Model.Porcentaje" />
+              <input type="number" id="txtPorcentaje" min="0" name="txtPorcentaje" class="form-control" placeholder="@Model.Porcentaje.ToString("0.00")" value="@Model.Porcentaje.ToString("0.00")" />
           </div>
         </div>
         <!--Fecha Inicio-->

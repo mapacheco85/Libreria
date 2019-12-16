@@ -19,7 +19,7 @@ namespace Libreria.Models.data
         public short IdProducto { get; set; }
         public short Cantidad { get; set; }
     
-        public virtual Producto Producto { get; set; }
         public virtual Reserva Reserva { get; set; }
+        public virtual Producto Producto { get; set; }
     }
 }
