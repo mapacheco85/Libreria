@@ -11,13 +11,11 @@ namespace Libreria.Models.data
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Descuento
     {
         public short IdDescuento { get; set; }
         public short IdProducto { get; set; }
-        [DisplayFormat(DataFormatString = "{0:0.###}", ApplyFormatInEditMode = true)]
         public decimal Porcentaje { get; set; }
         public System.DateTime FechaIni { get; set; }
         public System.DateTime FechaFin { get; set; }

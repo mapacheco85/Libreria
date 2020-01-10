@@ -11,8 +11,7 @@ namespace Libreria.Models.data
 {
     using System;
     using System.Collections.Generic;
-    using System.Web;
-
+    
     public partial class Producto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -32,9 +31,7 @@ namespace Libreria.Models.data
         public string Foto { get; set; }
         public bool Activo { get; set; }
         public string Codigo { get; set; }
-
-        public HttpPostedFileBase txtFoto { get; set; }
-
+    
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Descuento> Descuento { get; set; }

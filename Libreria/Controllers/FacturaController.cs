@@ -88,7 +88,7 @@ namespace Libreria.Controllers
                 {
                     string data = Col["Codigo"];
                     string[] lista = data.Split('-');
-                    var Pros = DB.PROListarProductos().SingleOrDefault(P => P.Codigo.Equals(lista[0]));
+                    var Pros = DB.PROListarProductos().SingleOrDefault(P => P.Codigo == lista[0]);
                     bool res = DB.Database.SqlQuery<bool>(String.Format(@"select dbo.fnControlStock({0},{1})", Pros.IdProducto, int.Parse(Col["txtCantidad"]))).FirstOrDefault<bool>();
                     if (res == true)
                     {
@@ -261,6 +261,14 @@ namespace Libreria.Controllers
                     ViewData["Literal"] = Lit.Convertir(Math.Round(Totales, 2, MidpointRounding.AwayFromZero).ToString());
                     ViewData["Total"] = Math.Round(Totales, 2, MidpointRounding.AwayFromZero).ToString();
                     ViewData["FecLimite"] = ((DateTime)Fact.Sucursal.LimiteEmision).ToString("dd/MM/yyyy");
+
+                    var lista = (from cc in DB.Carrito where cc.Activo == true select cc);
+                    foreach (Carrito carrito in lista.ToList())
+                    {
+                        carrito.SessionID = "0";
+                        carrito.Activo = false;
+                        DB.SaveChanges();
+                    }
 
                     //return View(Fact);
                     return new Rotativa.ViewAsPdf(Fact);

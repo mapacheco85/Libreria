@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Libreria.Models.data;
+using Libreria.ViewModels;
+using System.Web.Routing;
 
 namespace Libreria.Controllers
 {
@@ -12,12 +14,28 @@ namespace Libreria.Controllers
         // GET: Proveedor
         // Listado de Proveedores.
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(string filtro="", int pagina = 1)
         {
+            var totalLista = 10;
+
             using (var DB = new LibreriaDB())
             {
-                var Pro = DB.Proveedor.OrderBy(P => P.Nombre).ToList();
-                return View(Pro);
+                var Pro = DB.Proveedor.
+                    OrderBy(P => P.Nombre).
+                    Where(P => P.Nombre.Contains(filtro)).
+                    Skip((pagina - 1) * totalLista)
+                    .Take(totalLista).ToList();
+                var totalTuplas = DB.Proveedor.Count();
+                var modelo = new IndexViewModel();
+                modelo.Proveedores = Pro;
+                modelo.PaginaActual = pagina;
+                modelo.TotalDeRegistros = totalTuplas;
+                modelo.RegistrosPorPagina = totalLista;
+                modelo.ValoresQueryString = new RouteValueDictionary();
+                modelo.ValoresQueryString["filtro"] = filtro;
+
+                return View(modelo);
+                //return View(Pro);
             }
         }
 
@@ -35,7 +53,8 @@ namespace Libreria.Controllers
         {
             using (var DB = new LibreriaDB())
             {
-                var Pro = DB.Proveedor.SingleOrDefault(P => P.IdProveedor == id);
+                var Pro = DB.Proveedor.
+                    SingleOrDefault(P => P.IdProveedor == id);
 
                 return PartialView(Pro);
             }
@@ -102,7 +121,6 @@ namespace Libreria.Controllers
         [HttpPost]
         public ActionResult Eliminar(short id)
         {
-
             using (var DB = new LibreriaDB())
             {
                 Proveedor Pro = DB.Proveedor.SingleOrDefault(P => P.IdProveedor == id);

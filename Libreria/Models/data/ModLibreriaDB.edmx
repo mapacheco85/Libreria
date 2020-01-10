@@ -234,6 +234,11 @@
           <Property Name="Login" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="Pwd" Type="varchar" MaxLength="255" />
           <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="intento" Type="int" Nullable="false" />
+          <Property Name="foto" Type="image" Nullable="false" />
+          <Property Name="fechareg" Type="date" />
+          <Property Name="fechaultimo" Type="date" />
+          <Property Name="estado" Type="tinyint" Nullable="false" />
         </EntityType>
         <Association Name="FK_Carrito_Producto">
           <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
@@ -1117,6 +1122,11 @@
           <NavigationProperty Name="Stock" Relationship="LibreriaModel.FK_Stock_Usuario" FromRole="Usuario" ToRole="Stock" />
           <NavigationProperty Name="Sujeto" Relationship="LibreriaModel.FK_Usuario_Sujeto" FromRole="Usuario" ToRole="Sujeto" />
           <NavigationProperty Name="Factura" Relationship="LibreriaModel.FK_Factura_Usuario" FromRole="Usuario" ToRole="Factura" />
+          <Property Name="intento" Type="Int32" Nullable="false" />
+          <Property Name="foto" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="fechareg" Type="DateTime" Precision="0" />
+          <Property Name="fechaultimo" Type="DateTime" Precision="0" />
+          <Property Name="estado" Type="Byte" Nullable="false" />
         </EntityType>
         <Association Name="FK_Usuario_Clasificacion">
           <End Type="LibreriaModel.Clasificacion" Role="Clasificacion" Multiplicity="0..1" />
@@ -1672,6 +1682,11 @@
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="LibreriaModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fechaultimo" ColumnName="fechaultimo" />
+                <ScalarProperty Name="fechareg" ColumnName="fechareg" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
+                <ScalarProperty Name="intento" ColumnName="intento" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Pwd" ColumnName="Pwd" />
                 <ScalarProperty Name="Login" ColumnName="Login" />

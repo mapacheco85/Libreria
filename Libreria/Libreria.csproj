@@ -70,6 +70,10 @@
       <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MvcPaging, Version=2.1.13.46, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcPaging.2.1.13\lib\net40\MvcPaging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="ReportViewerForMvc, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ReportViewerForMvc.1.1.1\lib\net45\ReportViewerForMvc.dll</HintPath>
@@ -144,6 +148,14 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="zxing, Version=0.16.5.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.5\lib\net461\zxing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.5.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.5\lib\net461\zxing.presentation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -167,6 +179,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaseModelo.cs" />
     <Compile Include="Models\CAdminUsers.cs" />
     <Compile Include="Models\CCodigoControl.cs" />
     <Compile Include="Models\CLiteral.cs" />
@@ -302,6 +315,7 @@
     <Compile Include="Seguridad\ProveedorAutenticacion.cs" />
     <Compile Include="Seguridad\UsuarioMembership.cs" />
     <Compile Include="Utilitarios\Utils.cs" />
+    <Compile Include="ViewModels\IndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -314,7 +328,15 @@
     <Content Include="Content\img\Foto2.png" />
     <Content Include="Content\img\Foto3.jpg" />
     <Content Include="Content\img\nostrosL.jpg" />
+    <Content Include="Content\productimg\1.jpg" />
+    <Content Include="Content\productimg\Agenda.jpg" />
+    <Content Include="Content\productimg\agenda2020.jpg" />
+    <Content Include="Content\productimg\archivador.jpg" />
+    <Content Include="Content\productimg\colores.jpg" />
+    <Content Include="Content\productimg\cuadernos.jpg" />
     <Content Include="Content\productimg\descarga.jpeg" />
+    <Content Include="Content\productimg\mae-caja-de-grapas-estandar-266-gr-5000.jpg" />
+    <Content Include="Content\productimg\mochilaotto.jpg" />
     <Content Include="Content\productimg\modelo_702010-1.png" />
     <Content Include="Content\productimg\Pro-0.jpg" />
     <Content Include="Content\productimg\Pro-1.jpg" />
@@ -404,6 +426,8 @@
     <Content Include="Views\Cliente\Agregar.cshtml" />
     <Content Include="Views\Cliente\Editar.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
+    <Content Include="Views\Shared\_paginador.cshtml" />
+    <Content Include="Views\Factura\Listado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

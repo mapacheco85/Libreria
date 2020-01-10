@@ -10,9 +10,9 @@ namespace Libreria.Models
 {
     public class CReports
     {
-public static List<string> ListadoReportes()
+        public static List<string> ListadoReportes()
         {
-            
+
             List<string> lista = new List<string>();
             lista.Add("Elija una opción");
             lista.Add("Usuarios");

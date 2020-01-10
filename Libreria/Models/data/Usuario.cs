@@ -28,6 +28,11 @@ namespace Libreria.Models.data
         public string Login { get; set; }
         public string Pwd { get; set; }
         public bool Activo { get; set; }
+        public int intento { get; set; }
+        public byte[] foto { get; set; }
+        public Nullable<System.DateTime> fechareg { get; set; }
+        public Nullable<System.DateTime> fechaultimo { get; set; }
+        public byte estado { get; set; }
     
         public virtual Clasificacion Clasificacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -22,17 +22,17 @@
             <div class="thumbnail">
                 @if (@Item.Foto != null)
                 {
-                    <img style="height:350px;" alt="" src="@Url.Content(@Item.Foto)" />
+                    <img style="height:350px;width:350px;" alt="" src="@Url.Content(@Item.Foto)" />
                 }
                 else
                 {
-                    <img style="height:350px;" alt="" src="~/Content/img/sin-imagen.jpg" />
+                    <img style="height:350px;width:350px;" alt="" src="~/Content/img/sin-imagen.jpg" />
                 }
 
                 <div class="caption">
                     <h3>@Item.Nombre</h3>
                     <p>Costo: @String.Format("{0:f}", Item.Cobrar)</p>
-                    <p><input type="submit" class="btn btn-primary" role="button" value="Agregar al Carrito"></p>
+                    @*<p><input type="submit" class="btn btn-primary" role="button" value="Agregar al Carrito"></p>*@
                 </div>
             </div>
         </form>

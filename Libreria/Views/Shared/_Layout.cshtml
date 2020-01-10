@@ -1,49 +1,50 @@
-﻿@{ 
-  Libreria.Models.CAdminUsers CAd = new Libreria.Models.CAdminUsers();
-  short IdRol = CAd.ObtenerRol(User.Identity.Name);
- }
+﻿@{
+    Libreria.Models.CAdminUsers CAd = new Libreria.Models.CAdminUsers();
+    short IdRol = CAd.ObtenerRol(User.Identity.Name);
+}
 <!DOCTYPE html>
 <html lang="es-bo">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@ViewBag.Title - Libreria ELF</title>
-  @Styles.Render("~/Content/css")
-  @Scripts.Render("~/bundles/modernizr")
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Libreria ELF</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.Label("Librería Elf", new { @class = "navbar-brand" })
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    @*@Html.ActionLink("Librería Elf", "", "", new { area = "" }, new { @class = "navbar-brand" })*@
-                </div>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Librería Elf", "Index", "Home")*@
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("Librería Elf", "", "", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Ofertas", "Promos", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Reservas", "Index", "Carrito")</li>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        @*<li>@Html.ActionLink("Inicio", "Index", "Home")</li>*@
+                        <li>@Html.ActionLink("Ofertas", "Promos", "Home")</li>
+                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    }
 
                     <!--Menus validados por autenticación-->
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="dropdown">
+                        @*<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                @if (IdRol == 1)
-                                {
-                                    <li>@Html.ActionLink("Usuarios", "Index", "Sujeto")</li>
-                                    <li role="separator" class="divider"></li>
+                            <ul class="dropdown-menu">*@
+                    if (IdRol == 1)
+                    {
+                        <li>@Html.ActionLink("Usuarios", "Index", "Sujeto")</li>
+                        <li role="separator" class="divider"></li>
                                     <li>@Html.ActionLink("Proveedores", "Index", "Proveedor")</li>
                                     <li role="separator" class="divider"></li>
                                     <li>@Html.ActionLink("Productos", "Index", "Producto")</li>
@@ -55,112 +56,120 @@
                                     <li>@Html.ActionLink("Ventas", "Index", "Factura")</li>
                                     <li role="separator" class="divider"></li>
                                     <li>@Html.ActionLink("Reportes", "Index", "Reporte")</li>
-                                }
-                                else if (IdRol == 2)
-                                {
-                                    <li>@Html.ActionLink("Ventas", "Index", "Factura")</li>
-                                }
-                            </ul>
-                        </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>@Html.ActionLink("Catalogo", "Catalogo", "Carrito")</li>
                     }
-                </ul>
-                <!--Menu Inicio Sesion o Usuario Autenticado-->
-                <ul class="nav navbar-nav navbar-right">
-                    <!--Se debe cambiar segun la sesion iniciada-->
-                    <li>
+                    else if (IdRol == 2)
+                    {
+                        <li>@Html.ActionLink("Ventas", "Index", "Factura")</li>
+                    }
+                    @*</ul>
+                        </li>*@
+                    }
+                    @*</ul>*@
+                    <!--Menu Inicio Sesion o Usuario Autenticado-->
+                    <ul class="nav navbar-nav navbar-right">
+                        <!--Se debe cambiar segun la sesion iniciada-->
+
                         @if (User.Identity.IsAuthenticated)
                         {
-                            @Html.ActionLink("Cerrar Sesión", "LogOut", "Login")
+                            <li>
+                                @Html.ActionLink("Cerrar Sesión", "LogOut", "Login")
+                            </li>
+                            <li>
+                                @Html.ActionLink(@HttpContext.Current.User.Identity.Name,"","")
+                            </li>
                         }
                         else
                         {
-                            @Html.ActionLink("Iniciar Sesión", "Index", "Login")
+                            <li>
+                                @Html.ActionLink("Iniciar Sesión", "Index", "Login")
+                            </li>
                         }
-                    </li>
-                </ul>
+                    </ul>
 
             </div>
         </div>
     </div>
-  <div class="container body-content">
-    @RenderBody()
+    <div class="container body-content">
+        @RenderBody()
 
-  </div>
-
-  <!--Footer-->
-  <footer class="mi-footer" >
-    <div class="mi-footer-top">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-md-4">
-            <div class="mi-footer-single">
-              <h3>Librería ELF</h3>
-              <p>Al servicio de sus clientes.</p>
-            </div>
-            <div class="social-media">
-              <a href="#"><i class="fa fa-twitter"></i></a>
-              <a href="#"><i class="fa fa-youtube"></i></a>
-              <a href="#"><i class="fa fa-facebook"></i></a>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="mi-footer-single">
-              <h3>Links de Interés</h3>
-              <ul class="mi-useful-links">
-                <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                <li>@Html.ActionLink("Ofertas", "Promos", "Home")</li>
-                <li>@Html.ActionLink("Reservas", "Index", "Carrito")</li>
-                <li>@Html.ActionLink("Iniciar Sesión", "Index", "Login")</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="mi-footer-single">
-              <h3>Información y Contactos</h3>
-              <ul class="list-unstyled">
-                <li class="media">
-                  <span class="glyphicon glyphicon-home"></span>
-                  <div class="media-body">
-                      <p>&nbsp;Av. Gobles # 115, Barrio Irpavi, La Paz – Bolivia.</p>
-                  </div>
-                </li>
-                <li class="media">
-                  <span class="glyphicon glyphicon-earphone"></span>
-                  <div class="media-body">
-                    <p>2723366 - 72020203</p>
-                  </div>
-                </li>
-                <li class="media">
-                  <span class="glyphicon glyphicon-envelope"></span>
-                  <div class="media-body">
-                    <p>info@libreriaelf.com - pedidos@libreriaelf.com</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-        </div>
-      </div>
     </div>
-    
-    <div class="mi-footer-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="mi-footer-bottom-area">
-              <p class="mi-copyright">&copy; Copyright @DateTime.Now.Year - Librería ELF. Todos los derechos reservados</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-  </footer>
 
-  @Scripts.Render("~/bundles/jquery")
-  @Scripts.Render("~/bundles/bootstrap")
-  @RenderSection("scripts", required: false)
+    <!--Footer-->
+    <footer class="mi-footer">
+        <div class="mi-footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="mi-footer-single">
+                            <h3>Librería ELF</h3>
+                            <p>Al servicio de sus clientes.</p>
+                        </div>
+                        <div class="social-media">
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-youtube"></i></a>
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mi-footer-single">
+                            <h3>Links de Interés</h3>
+                            <ul class="mi-useful-links">
+                                <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                                <li>@Html.ActionLink("Ofertas", "Promos", "Home")</li>
+                                <li>@Html.ActionLink("Reservas", "Index", "Carrito")</li>
+                                <li>@Html.ActionLink("Iniciar Sesión", "Index", "Login")</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mi-footer-single">
+                            <h3>Información y Contactos</h3>
+                            <ul class="list-unstyled">
+                                <li class="media">
+                                    <span class="glyphicon glyphicon-home"></span>
+                                    <div class="media-body">
+                                        <p>&nbsp;Av. Gobles # 115, Barrio Irpavi, La Paz – Bolivia.</p>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <span class="glyphicon glyphicon-earphone"></span>
+                                    <div class="media-body">
+                                        <p>2723366 - 72020203</p>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                    <div class="media-body">
+                                        <p>info@libreriaelf.com - pedidos@libreriaelf.com</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="mi-footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mi-footer-bottom-area">
+                            <p class="mi-copyright">&copy; Copyright @DateTime.Now.Year - Librería ELF. Todos los derechos reservados</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

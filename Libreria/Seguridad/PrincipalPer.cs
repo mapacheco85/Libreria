@@ -6,29 +6,29 @@ using System.Web;
 
 namespace Libreria.Seguridad
 {
-  public class PrincipalPer:IPrincipal
-  {
-    public bool IsInRol(string Role)
+    public class PrincipalPer : IPrincipal
     {
-      throw new NotImplementedException();
-    }
+        public bool IsInRol(string Role)
+        {
+            throw new NotImplementedException();
+        }
 
-    bool IPrincipal.IsInRole(string role)
-    {
-      throw new NotImplementedException();
-    }
+        bool IPrincipal.IsInRole(string role)
+        {
+            throw new NotImplementedException();
+        }
 
-    public IIdentity Identity { get;private set; }
+        public IIdentity Identity { get; private set; }
 
-    public IdentityPer MiIdentidadPersonalizada
-    {
-      get { return (IdentityPer)Identity; }
-      set { Identity = value; }
-    }
+        public IdentityPer MiIdentidadPersonalizada
+        {
+            get { return (IdentityPer)Identity; }
+            set { Identity = value; }
+        }
 
-    public PrincipalPer(IdentityPer identity)
-    {
-      Identity = identity;
+        public PrincipalPer(IdentityPer identity)
+        {
+            Identity = identity;
+        }
     }
-  }
 }

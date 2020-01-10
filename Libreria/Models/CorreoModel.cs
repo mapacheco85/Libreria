@@ -18,6 +18,5 @@ namespace Libreria.Models
         public string Email { get; set; }
         [Required]
         public string Telefono { get; set; }
-
     }
 }

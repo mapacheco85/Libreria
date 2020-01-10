@@ -95,7 +95,7 @@ namespace Libreria.Controllers
                     //Editar el Usuario (Login, Pwd)
                     var Usu = DB.Usuario.FirstOrDefault(P => P.IdSujeto == Su.IdSujeto);
                     Usu.Login = Col["txtLogin"];
-
+                    Usu.intento = int.Parse(Col["txtIntentos"]);
                     if (Usu.Pwd != Col["txtPwd"])
                         Usu.Pwd = Libreria.Utilitarios.Utils.GetSha1(Col["txtPwd"]);
                     else

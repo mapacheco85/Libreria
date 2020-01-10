@@ -51,7 +51,7 @@
     </div>
     <div class="pull-right">
 
-        <button class="btn btn-default" type="submit">Vender</button>
+        <button class="btn btn-default" type="submit" onclick="volver();">Vender</button>
         <button class="btn btn-default finalizar" type="button">Volver</button>
     </div>
     <p></p>
@@ -62,7 +62,11 @@
         $('.finalizar').click(function () {
             if (confirm("Desea volver a la lista de productos?"))
                 document.location.href = "@Url.Content("/Libreria/factura/")";
-        });
+            });
+
+            function volver() {                
+                document.location.href = "@Url.Content("/Libreria/")";
+            }
         </script>
 
     }

@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="LibreriaModel.Descuento" Width="1.5" PointX="0.625" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LibreriaModel.Detalle" Width="1.5" PointX="9.875" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LibreriaModel.DetReserva" Width="1.5" PointX="5.375" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LibreriaModel.Empresa" Width="1.5" PointX="1.25" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibreriaModel.Empresa" Width="1.5" PointX="1.25" PointY="17.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LibreriaModel.Nivel" Width="1.5" PointX="6" PointY="23.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LibreriaModel.Proveedor" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LibreriaModel.Reserva" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />

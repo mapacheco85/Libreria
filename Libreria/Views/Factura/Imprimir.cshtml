@@ -22,14 +22,14 @@
         </div>
 
         <div class="Centro">
-            <h2>NOTA DE VENTA</h2>
+            <h2>FACTURA</h2>
             <p>ORIGINAL</p>
         </div>
 
         <div class="Derecha" style="border: hidden;">
-            @*<p><strong>NIT: Nº @Model.Sucursal.NIT</strong></p>*@
-            <p><strong>VENTA: Nº @Model.Numero.ToString()</strong></p>
-            @*<p><strong>AUTORIZACION: Nº @Model.Sucursal.NroAutorizacion</strong></p>*@
+            <p><strong>NIT: Nº @Model.Sucursal.NIT</strong></p>
+            <p><strong> Nº @Model.Numero.ToString()</strong></p>
+            <p><strong>AUTORIZACION: @Model.Sucursal.NroAutorizacion</strong></p>
         </div>
         <!--Datos del Cliente-->
         <div class="Fecha">
@@ -93,10 +93,10 @@
         </div>
         <!--Codigo Control y Fecha Limite-->
         <div class="Pie">
-            @*<strong>CODIGO DE CONTROL:</strong> @Model.CodigoControl*@
+            <strong>CODIGO DE CONTROL:</strong> @Model.CodigoControl
         </div>
         <div class="Pie">
-            @*<strong>FECHA LIMITE DE EMISIÓN:</strong> @ViewData["FecLimite"]*@
+            <strong>FECHA LIMITE DE EMISIÓN:</strong> @ViewData["FecLimite"]
         </div>
     </div>
 

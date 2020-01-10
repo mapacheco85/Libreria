@@ -45,6 +45,14 @@
                     <label for="txtFoto" class="col-sm-3 control-label">Foto:</label>
                     <div class="col-sm-9">
                         <input type="file" id="txtFoto" name="txtFoto" class="form-control" placeholder="Foto" value="@Model.Foto" />
+                        @if (@Model.Foto != null)
+                        {
+                            <img style="height:350px;width:350px;" alt="" src="@Url.Content(@Model.Foto)" />
+                        }
+                        else
+                        {
+                            <img style="height:350px; width:350px;" alt="" src="~/Content/img/sin-imagen.jpg" />
+                        }
                     </div>
                 </div>
                 <span style="color:green">@ViewBag.Message</span>
